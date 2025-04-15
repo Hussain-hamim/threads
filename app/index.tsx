@@ -14,7 +14,7 @@ export default function Index() {
       <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
         Welcome to the Threads app!
       </Text>
-      <Text>Hello world oy oi</Text>
+      <Text>Hello world oy</Text>
     </View>
   );
 }
