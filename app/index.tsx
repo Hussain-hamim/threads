@@ -13,13 +13,54 @@ import { Ionicons } from '@expo/vector-icons';
 
 export default function Index() {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_facebook' });
+  // const { startOAuthFlow } = useOAuth({ strategy: 'oauth_instagram' });
   const { startOAuthFlow: startGoogleOAuthFlow } = useOAuth({
     strategy: 'oauth_google',
   });
+  const { signOut } = useAuth();
+
+  const handleFacebookLogin = async () => {
+    try {
+      const { createdSessionId, setActive } = await startOAuthFlow();
+      console.log(
+        '🚀 ~ handleFacebookLogin ~ createdSessionId:',
+        createdSessionId
+      ); //ctrl + alt + l
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const { createdSessionId, setActive } = await startGoogleOAuthFlow();
+      console.log(
+        '🚀 ~ handleFacebookLogin ~ createdSessionId:',
+        createdSessionId
+      );
+      if (createdSessionId) {
+        setActive!({ session: createdSessionId });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const logout = async () => {
+    try {
+      await signOut();
+      console.log('User logged out');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <StatusBar style='dark' />
+      <StatusBar style='light' />
       <Image
         source={require('@/assets/images/login.png')}
         style={styles.loginImage}
@@ -30,7 +71,7 @@ export default function Index() {
         <View style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.loginButton}
-            // onPress={handleFacebookLogin}
+            onPress={handleFacebookLogin}
           >
             <View style={styles.loginButtonContent}>
               <Image
@@ -56,7 +97,7 @@ export default function Index() {
           {/* For tetstingh with a different account */}
           <TouchableOpacity
             style={styles.loginButton}
-            // onPress={handleGoogleLogin}
+            onPress={handleGoogleLogin}
           >
             <View style={styles.loginButtonContent}>
               <Text style={styles.loginButtonText}>Continue with Google</Text>
@@ -83,8 +124,10 @@ export default function Index() {
             </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity>
-            <Text style={styles.switchAccountButtonText}>Switch accounts</Text>
+          <TouchableOpacity onPress={logout}>
+            <Text style={styles.switchAccountButtonText}>
+              Switch accounts (Log Out)
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -96,7 +139,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    gap: 20,
+    gap: 10,
     backgroundColor: Colors.background,
   },
   loginImage: {
