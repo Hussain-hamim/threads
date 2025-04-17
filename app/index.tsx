@@ -11,6 +11,9 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { Camera, User } from 'lucide-react-native';
+import { useQueries, useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
 
 export default function Index() {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_facebook' });
@@ -19,6 +22,9 @@ export default function Index() {
     strategy: 'oauth_google',
   });
   const { signOut } = useAuth();
+
+  const data = useQuery(api.users.getAllUsers);
+  console.log('🚀 ~ Index ~ data:', data);
 
   const handleFacebookLogin = async () => {
     try {
@@ -71,6 +77,9 @@ export default function Index() {
           }}
         >
           <Ionicons name='at' size={44} />
+          {/* <User size={44} /> */}
+          {/* <Camera size={24} /> */}
+
           <Text
             style={{
               fontSize: 28,
@@ -131,7 +140,7 @@ export default function Index() {
 
           <TouchableOpacity onPress={logout}>
             <Text className='text-3xl' style={styles.switchAccountButtonText}>
-              Switch accounts (Log Out)
+              Use different account (Log Out)
             </Text>
           </TouchableOpacity>
         </View>
