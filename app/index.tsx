@@ -1,5 +1,4 @@
 import '../global.css';
-
 import { Colors } from '@/constants/Colors';
 import { useAuth, useOAuth } from '@clerk/clerk-expo';
 import { StatusBar } from 'expo-status-bar';
