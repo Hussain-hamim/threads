@@ -39,10 +39,6 @@ export default function Index() {
   const handleGoogleLogin = async () => {
     try {
       const { createdSessionId, setActive } = await startGoogleOAuthFlow();
-      console.log(
-        '🚀 ~ handleFacebookLogin ~ createdSessionId:',
-        createdSessionId
-      );
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
       }
@@ -64,11 +60,27 @@ export default function Index() {
     <View style={styles.container}>
       <StatusBar style='light' />
       <Image
-        source={require('@/assets/images/login.png')}
+        source={require('@/assets/images/logo.jpg')}
         style={styles.loginImage}
       />
       <ScrollView contentContainerStyle={styles.container}>
-        <Text style={styles.title}>How would you like to use Threads?</Text>
+        <View
+          style={{
+            flexDirection: 'row',
+            gap: 5,
+            marginVertical: 20,
+          }}
+        >
+          <Ionicons name='at' size={44} />
+          <Text
+            style={{
+              fontSize: 28,
+              fontWeight: '400',
+            }}
+          >
+            Threads
+          </Text>
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -76,10 +88,7 @@ export default function Index() {
             onPress={handleFacebookLogin}
           >
             <View style={styles.loginButtonContent}>
-              <Image
-                source={require('@/assets/images/instagram_icon.webp')}
-                style={styles.loginButtonImage}
-              />
+              <Ionicons name='logo-instagram' size={38} />
               <Text style={styles.loginButtonText}>
                 Continue with Instagram
               </Text>
@@ -89,11 +98,6 @@ export default function Index() {
                 color={Colors.border}
               />
             </View>
-            <Text style={styles.loginButtonSubtitle}>
-              Log in or create a THreads profile with your Instagram account.
-              With a profile, you can post, interact and get personalised
-              recommendations.
-            </Text>
           </TouchableOpacity>
 
           {/* For tetstingh with a different account */}
@@ -102,6 +106,8 @@ export default function Index() {
             onPress={handleGoogleLogin}
           >
             <View style={styles.loginButtonContent}>
+              <Ionicons name='logo-google' color='black' size={38} />
+
               <Text style={styles.loginButtonText}>Continue with Google</Text>
               <Ionicons
                 name='chevron-forward'
@@ -113,6 +119,8 @@ export default function Index() {
 
           <TouchableOpacity style={styles.loginButton}>
             <View style={styles.loginButtonContent}>
+              <Ionicons name='cloud-outline' color='black' size={38} />
+
               <Text style={styles.loginButtonText}>Use without a profile</Text>
               <Ionicons
                 name='chevron-forward'
@@ -120,10 +128,6 @@ export default function Index() {
                 color={Colors.border}
               />
             </View>
-            <Text style={styles.loginButtonSubtitle}>
-              You can browse Threads without a profile, but won't be able to
-              post, interact or get personalised recommendations.
-            </Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={logout}>
@@ -142,7 +146,8 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     gap: 10,
-    backgroundColor: Colors.background,
+    // backgroundColor: Colors.background,
+    backgroundColor: '#EEEEEE',
   },
   loginImage: {
     width: '100%',
@@ -154,8 +159,9 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans_500Medium',
   },
   buttonContainer: {
-    gap: 20,
-    marginHorizontal: 20,
+    gap: 10,
+    marginHorizontal: 18,
+    minWidth: 330,
   },
   loginButton: {
     backgroundColor: '#fff',
@@ -166,8 +172,8 @@ const styles = StyleSheet.create({
     borderColor: Colors.border,
   },
   loginButtonText: {
-    color: '#000',
-    fontSize: 15,
+    color: 'gray',
+    fontSize: 16,
     fontFamily: 'DMSans_500Medium',
     flex: 1,
   },
