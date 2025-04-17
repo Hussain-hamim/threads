@@ -1,3 +1,5 @@
+import '../global.css';
+
 import { Colors } from '@/constants/Colors';
 import { useAuth, useOAuth } from '@clerk/clerk-expo';
 import { StatusBar } from 'expo-status-bar';
@@ -125,7 +127,7 @@ export default function Index() {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={logout}>
-            <Text style={styles.switchAccountButtonText}>
+            <Text className='text-3xl' style={styles.switchAccountButtonText}>
               Switch accounts (Log Out)
             </Text>
           </TouchableOpacity>
