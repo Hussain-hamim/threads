@@ -133,7 +133,7 @@ export default function Index() {
 
               <Text
                 style={styles.loginButtonText}
-                onPress={() => router.push('/(auth)/(tabs)/profile')}
+                onPress={() => router.push('/(auth)/(tabs)/feed')}
               >
                 Use without a profile
               </Text>
