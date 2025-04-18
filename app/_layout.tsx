@@ -22,7 +22,7 @@ import {
   useUser,
 } from '@clerk/clerk-expo';
 import { tokenCache } from '@/utils/cache';
-import { LogBox } from 'react-native';
+import { LogBox, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ConvexReactClient } from 'convex/react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
@@ -49,12 +49,30 @@ const InitialLayout = () => {
     DMSans_500Medium,
     DMSans_700Bold,
   });
+  const { isLoaded, isSignedIn } = useAuth();
+  const segments = useSegments();
+  const router = useRouter();
+  const user = useUser();
 
   useEffect(() => {
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+
+  useEffect(() => {
+    // if (!isLoaded) return;
+
+    const inTabsGroup = segments[0] === '(auth)';
+
+    if (isSignedIn && !inTabsGroup) {
+      // if (true) {
+      router.replace('/(auth)/(tabs)/feed');
+    } else if (!isSignedIn && inTabsGroup) {
+      router.replace('/(public)');
+    }
+  }, [isSignedIn]);
+  // }, []);
 
   return <Slot />;
 };
