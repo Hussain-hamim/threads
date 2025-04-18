@@ -1,8 +1,9 @@
 import { Colors } from '@/constants/Colors';
 import { useAuth } from '@clerk/clerk-expo';
 import { Ionicons } from '@expo/vector-icons';
-import { Stack, Tabs } from 'expo-router';
+import { Stack, Tabs, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import * as Haptics from 'expo-haptics';
 
 const CreateTabIcon = ({ color, size }: { color: string; size: number }) => (
   <View style={styles.createIconContainer}>
@@ -12,6 +13,7 @@ const CreateTabIcon = ({ color, size }: { color: string; size: number }) => (
 
 const Layout = () => {
   const { signOut } = useAuth();
+  const router = useRouter();
 
   return (
     <Tabs
@@ -57,6 +59,14 @@ const Layout = () => {
           tabBarIcon: ({ color, size, focused }) => (
             <CreateTabIcon color={color} size={size} />
           ),
+        }}
+        listeners={{
+          tabPress: (e) => {
+            e.preventDefault();
+            router.push('/(auth)/(modal)/create');
+            Haptics.selectionAsync();
+            console.log('hhhhh');
+          },
         }}
       />
 

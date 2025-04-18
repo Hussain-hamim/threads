@@ -1,5 +1,7 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { TouchableOpacity } from 'react-native';
 
 const Layout = () => {
   return (
@@ -12,6 +14,18 @@ const Layout = () => {
         }}
       >
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+        <Stack.Screen
+          name='(modal)/create'
+          options={{
+            presentation: 'modal',
+            title: 'New Thread',
+            headerRight: () => (
+              <TouchableOpacity>
+                <Ionicons name='ellipsis-horizontal-circle' size={26} />
+              </TouchableOpacity>
+            ),
+          }}
+        />
       </Stack>
     </>
   );
