@@ -3,10 +3,22 @@ import { httpAction } from './_generated/server';
 
 const http = httpRouter();
 
-export const doSomething = httpAction(async () => {
+export const doSomething = httpAction(async (ctx, request) => {
+  const { data, type } = await request.json();
+  console.log('🚀 ~ doSomething ~ data:', data);
+
   // implementation will be here
   console.log('Doing something... again!');
-  return new Response();
+
+  switch (type) {
+    case 'user.created':
+      console.log('User created:', data);
+      break;
+    case 'user.updated':
+      console.log('User updated:', data);
+      break;
+  }
+  return new Response(null, { status: 200 });
 });
 
 http.route({
