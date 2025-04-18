@@ -61,18 +61,16 @@ const InitialLayout = () => {
   }, [fontsLoaded]);
 
   useEffect(() => {
-    // if (!isLoaded) return;
+    if (!isLoaded) return;
 
     const inTabsGroup = segments[0] === '(auth)';
 
     if (isSignedIn && !inTabsGroup) {
-      // if (true) {
       router.replace('/(auth)/(tabs)/feed');
     } else if (!isSignedIn && inTabsGroup) {
       router.replace('/(public)');
     }
   }, [isSignedIn]);
-  // }, []);
 
   return <Slot />;
 };
