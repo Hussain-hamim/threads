@@ -1,18 +1,23 @@
 import { httpRouter } from 'convex/server';
 import { httpAction } from './_generated/server';
+import { internal } from './_generated/api';
 
 const http = httpRouter();
 
-export const doSomething = httpAction(async (ctx, request) => {
+export const handleClerkWebhook = httpAction(async (ctx, request) => {
   const { data, type } = await request.json();
-  console.log('🚀 ~ doSomething ~ data:', data);
-
-  // implementation will be here
-  console.log('Doing something... again!');
 
   switch (type) {
     case 'user.created':
-      console.log('User created:', data);
+      await ctx.runMutation(internal.users.createUser, {
+        clerkId: data.id,
+        email: data.email_addresses[0].email_address,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        imageUrl: data.image_url,
+        username: data.username,
+        followersCount: 0,
+      });
       break;
     case 'user.updated':
       console.log('User updated:', data);
@@ -23,8 +28,8 @@ export const doSomething = httpAction(async (ctx, request) => {
 
 http.route({
   path: '/clerk-users-webhook',
-  method: 'GET',
-  handler: doSomething,
+  method: 'POST',
+  handler: handleClerkWebhook,
 });
 
 //https://<your deployment name>.convex.site
