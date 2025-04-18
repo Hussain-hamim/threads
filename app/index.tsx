@@ -24,7 +24,7 @@ export default function Index() {
   const { signOut } = useAuth();
 
   const data = useQuery(api.users.getAllUsers);
-  console.log('🚀 ~ Index ~ data:', data);
+  // console.log('🚀 ~ Index ~ data:', data);
 
   const handleFacebookLogin = async () => {
     try {
@@ -63,7 +63,7 @@ export default function Index() {
 
   return (
     <View style={styles.container}>
-      <StatusBar style='light' />
+      <StatusBar style='dark' />
       <Image
         source={require('@/assets/images/logo.jpg')}
         style={styles.loginImage}
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     gap: 10,
     marginHorizontal: 18,
-    minWidth: 330,
+    minWidth: 340,
   },
   loginButton: {
     backgroundColor: '#fff',
