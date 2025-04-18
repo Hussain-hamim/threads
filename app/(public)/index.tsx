@@ -14,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Camera, User } from 'lucide-react-native';
 import { useQueries, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { useRouter } from 'expo-router';
 
 export default function Index() {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_facebook' });
@@ -22,6 +23,7 @@ export default function Index() {
     strategy: 'oauth_google',
   });
   const { signOut } = useAuth();
+  const router = useRouter();
 
   const data = useQuery(api.users.getAllUsers);
   // console.log('🚀 ~ Index ~ data:', data);
@@ -129,7 +131,12 @@ export default function Index() {
             <View style={styles.loginButtonContent}>
               <Ionicons name='cloud-outline' color='black' size={38} />
 
-              <Text style={styles.loginButtonText}>Use without a profile</Text>
+              <Text
+                style={styles.loginButtonText}
+                onPress={() => router.push('/(auth)/(tabs)/profile')}
+              >
+                Use without a profile
+              </Text>
               <Ionicons
                 name='chevron-forward'
                 size={24}
