@@ -37,6 +37,7 @@ const CreateThread = () => {
               placeholderTextColor='#999'
               multiline
               value={text}
+              autoFocus
               onChangeText={setText}
             />
           </View>
