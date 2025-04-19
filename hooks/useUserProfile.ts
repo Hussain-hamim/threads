@@ -8,4 +8,5 @@ export function useUserProfile() {
   const clerkId = user?.id;
 
   const userProfile = useQuery(api.users.getUserByClerkId, { clerkId });
+  return { userProfile };
 }
