@@ -12,8 +12,8 @@ type UserProfileProps = {
 
 const UserProfile = ({ userId }: UserProfileProps) => {
   const profile = useQuery(api.users.getUserById, {
-    // userId: userId as Id<'users'>,
-    userId: userId,
+    userId: userId as Id<'users'>,
+    // userId: userId,
   });
   const { userProfile } = useUserProfile();
   const isSelf = userProfile?._id === userId;
@@ -34,7 +34,8 @@ const UserProfile = ({ userId }: UserProfileProps) => {
       </View>
       <Text style={styles.bio}>{profile?.bio || 'no bio'}</Text>
       <Text>
-        {profile?.followersCount} followers · {profile?.websiteUrl}
+        {profile?.followersCount || '10M'} followers ·{' '}
+        {profile?.websiteUrl || 'https://hsn.dev'}
       </Text>
 
       <View style={styles.buttonRow}>

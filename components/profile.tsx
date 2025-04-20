@@ -16,13 +16,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@clerk/clerk-react';
 import { useRouter } from 'expo-router';
 import UserProfile from './UserProfile';
+import Tabs from './Tabs';
 
 type ProfileProps = {
   userId?: Id<'users'>;
   showBackButton?: boolean;
 };
 
-const Profile = ({ userId, showBackButton = true }: ProfileProps) => {
+const Profile = ({
+  userId,
+  showBackButton = false,
+  //   userId = 'jd72v71pdnme2qy6a6ym8htpdh71eys9',
+  //   showBackButton = true,
+}: ProfileProps) => {
   const { userProfile } = useUserProfile();
   const { top } = useSafeAreaInsets();
   const { signOut } = useAuth();
@@ -33,7 +39,11 @@ const Profile = ({ userId, showBackButton = true }: ProfileProps) => {
       <FlatList
         data={[]}
         renderItem={({ item }) => <Text>Test</Text>}
-        ListEmptyComponent={<Text>no data</Text>}
+        ListEmptyComponent={
+          <Text style={styles.tabContentText}>
+            You haven't posted anything yet
+          </Text>
+        }
         ItemSeparatorComponent={() => (
           <View
             style={{
@@ -63,13 +73,12 @@ const Profile = ({ userId, showBackButton = true }: ProfileProps) => {
                 </TouchableOpacity>
               </View>
             </View>
-            {userId ? (
-              <UserProfile userId={userId} />
-            ) : (
+            {userId && <UserProfile userId={userId} />}
+            {!userId && userProfile && (
               <UserProfile userId={userProfile?._id} />
             )}
 
-            {/* <Tabs onTabChange={handleTabChange} /> */}
+            <Tabs onTabChange={(tab) => {}} />
           </>
         }
       />
