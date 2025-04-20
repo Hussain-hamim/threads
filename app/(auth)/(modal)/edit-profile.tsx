@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import {
   Button,
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -24,6 +25,7 @@ const EditProfile = () => {
   const [bio, setBio] = useState(biostring);
   const [link, setLink] = useState(linkstring);
   const [image, setImage] = useState(imageUrl);
+  const [name, setName] = useState('');
 
   const updateUser = useMutation(api.users.updateUser);
 
@@ -41,7 +43,7 @@ const EditProfile = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Stack.Screen
         options={{
           headerRight: () => (
@@ -53,30 +55,46 @@ const EditProfile = () => {
       />
       <Image source={{ uri: image }} style={styles.image} />
       <View style={styles.section}>
-        <Text style={styles.label}>Bio</Text>
-        <TextInput
-          value={bio}
-          onChangeText={setBio}
-          multiline
-          numberOfLines={4}
-          style={[styles.bioInput]}
-          textAlignVertical='top'
-          placeholder='Write a bio...'
-        />
-      </View>
-      <View style={styles.section}>
-        <Text style={styles.label}>Link</Text>
-        <TextInput
-          value={link}
-          onChangeText={setLink}
-          placeholder='https://hsn.dev'
-          autoCapitalize='none'
-          style={[styles.bioInput]}
-        />
-      </View>
+        <View>
+          <Text style={styles.label}>Name</Text>
+          <TextInput
+            value={name}
+            onChangeText={setName}
+            placeholder='hsn'
+            style={[styles.bioInput]}
+          />
+        </View>
 
-      <Button onPress={() => onDone()} title='done' />
-    </View>
+        <View>
+          <Text style={styles.label}>Bio</Text>
+          <TextInput
+            value={bio}
+            onChangeText={setBio}
+            multiline
+            numberOfLines={4}
+            style={[styles.bioInput]}
+            textAlignVertical='top'
+            placeholder='Write a bio...'
+            autoFocus
+          />
+        </View>
+        <View>
+          <Text style={styles.label}>Link</Text>
+          <TextInput
+            value={link}
+            onChangeText={setLink}
+            placeholder='https://hsn.dev'
+            autoCapitalize='none'
+            style={[styles.bioInput, { borderBottomWidth: 0 }]}
+          />
+        </View>
+
+        {/* <Button onPress={() => onDone()} title='done' /> */}
+      </View>
+      <TouchableOpacity style={{ alignItems: 'center' }} onPress={onDone}>
+        <Text style={styles.doneButtonText}>Done</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
 
@@ -85,19 +103,22 @@ export default EditProfile;
 const styles = StyleSheet.create({
   section: {
     marginBottom: 16,
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.border,
-    borderRadius: 4,
+    borderRadius: 14,
     padding: 8,
     margin: 16,
   },
   bioInput: {
     height: 50,
+    borderColor: Colors.border,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   label: {
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 4,
+    marginTop: 10,
   },
   doneButtonText: {
     fontSize: 16,
@@ -105,8 +126,10 @@ const styles = StyleSheet.create({
     color: Colors.submit,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
+    marginTop: 16,
+
     borderRadius: 50,
     alignSelf: 'center',
   },

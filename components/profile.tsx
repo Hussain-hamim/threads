@@ -9,6 +9,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  TextInput,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
@@ -24,10 +25,10 @@ type ProfileProps = {
 };
 
 const Profile = ({
-  userId,
-  showBackButton = false,
-  // userId = 'jd72c1x7px0x0ygwpec5ar3vc571en6p',
-  // showBackButton = true,
+  // userId,
+  // showBackButton = false,
+  userId = 'jd72c1x7px0x0ygwpec5ar3vc571en6p',
+  showBackButton = true,
 }: ProfileProps) => {
   const { userProfile } = useUserProfile();
   const { top } = useSafeAreaInsets();
@@ -35,14 +36,16 @@ const Profile = ({
   const router = useRouter();
 
   return (
-    <View style={[styles.container, { paddingTop: top }]}>
+    <View style={[styles.container, { paddingTop: top + 8 }]}>
       <FlatList
         data={[]}
         renderItem={({ item }) => <Text>Test</Text>}
         ListEmptyComponent={
-          <Text style={styles.tabContentText}>
-            You haven't posted anything yet
-          </Text>
+          <>
+            <Text style={styles.tabContentText}>
+              You haven't posted anything yet
+            </Text>
+          </>
         }
         ItemSeparatorComponent={() => (
           <View
