@@ -54,8 +54,12 @@ const UserProfile = ({ userId }: UserProfileProps) => {
             <TouchableOpacity style={styles.fullButton}>
               <Text style={styles.fullButtonText}>Follow</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.fullButton}>
-              <Text style={styles.fullButtonText}>Mention</Text>
+            <TouchableOpacity
+              style={[styles.fullButton, { backgroundColor: 'white' }]}
+            >
+              <Text style={[styles.fullButtonText, { color: 'black' }]}>
+                Mention
+              </Text>
             </TouchableOpacity>
           </>
         )}
@@ -105,7 +109,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: Colors.border,
@@ -117,7 +121,7 @@ const styles = StyleSheet.create({
   },
   fullButton: {
     flex: 1,
-    padding: 10,
+    padding: 5,
     borderRadius: 5,
     borderWidth: 1,
     backgroundColor: '#000',

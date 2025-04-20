@@ -42,6 +42,8 @@ if (!clerkPublishableKey) {
 }
 LogBox.ignoreLogs(['Clerk: Clerk has been loaded with development keys']);
 
+const routingInstrumentation = Sentry.reactNavigationIntegration();
+
 const navigationIntegration = Sentry.reactNavigationIntegration({
   enableTimeToInitialDisplay: !isRunningInExpoGo(),
 });
@@ -99,6 +101,11 @@ const InitialLayout = () => {
 };
 
 export default function RootLayout() {
+  const ref = useNavigationContainerRef();
+  useEffect(() => {
+    routingInstrumentation.registerNavigationContainer(ref);
+  }, [ref]);
+
   return (
     <ClerkProvider publishableKey={clerkPublishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
