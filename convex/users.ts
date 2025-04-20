@@ -38,3 +38,10 @@ export const getUserByClerkId = query({
       .unique();
   },
 });
+
+export const getUserById = query({
+  args: { userId: v.id('users') },
+  handler: async (ctx, { userId }) => {
+    return await ctx.db.get(userId);
+  },
+});
