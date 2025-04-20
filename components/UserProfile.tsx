@@ -41,9 +41,14 @@ const UserProfile = ({ userId }: UserProfileProps) => {
       <View style={styles.buttonRow}>
         {isSelf && (
           <>
-            <TouchableOpacity style={styles.button}>
-              <Text style={styles.buttonText}>Edit Profile</Text>
-            </TouchableOpacity>
+            <Link
+              href={`/(modal)/edit-profile?userId=${profile?._id}&imageUrl=${profile?.imageUrl}&biostring=${profile?.bio}`}
+              asChild
+            >
+              <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Edit Profile</Text>
+              </TouchableOpacity>
+            </Link>
             <TouchableOpacity style={styles.button}>
               <Text style={styles.buttonText}>Share Profile</Text>
             </TouchableOpacity>

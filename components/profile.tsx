@@ -24,10 +24,10 @@ type ProfileProps = {
 };
 
 const Profile = ({
-  // userId,
-  // showBackButton = false,
-  userId = 'jd72c1x7px0x0ygwpec5ar3vc571en6p',
-  showBackButton = true,
+  userId,
+  showBackButton = false,
+  // userId = 'jd72c1x7px0x0ygwpec5ar3vc571en6p',
+  // showBackButton = true,
 }: ProfileProps) => {
   const { userProfile } = useUserProfile();
   const { top } = useSafeAreaInsets();
