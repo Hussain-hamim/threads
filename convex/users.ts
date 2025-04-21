@@ -5,6 +5,7 @@ import {
   query,
   QueryCtx,
 } from './_generated/server';
+import { Id } from './_generated/dataModel';
 
 export const getAllUsers = query({
   args: {},
@@ -47,7 +48,7 @@ export const getUserByClerkId = query({
 export const getUserById = query({
   args: { userId: v.id('users') },
   handler: async (ctx, { userId }) => {
-    return await ctx.db.get(userId);
+    return getUserWithImageUrl(ctx, userId);
   },
 });
 
@@ -56,7 +57,7 @@ export const updateUser = mutation({
     _id: v.id('users'),
     bio: v.optional(v.string()),
     websiteUrl: v.optional(v.string()),
-    profilePicture: v.optional(v.string()),
+    imageUrl: v.optional(v.id('_storage')),
     pushToken: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
@@ -65,6 +66,29 @@ export const updateUser = mutation({
     return await ctx.db.patch(args._id, args);
   },
 });
+
+export const generateUploadUrl = mutation({
+  handler: async (ctx) => {
+    await getCurrentUserOrThrow(ctx); // Ensure the user is authenticated
+
+    return await ctx.storage.generateUploadUrl();
+  },
+});
+
+// Reusable fn
+const getUserWithImageUrl = async (ctx: QueryCtx, userId: Id<'users'>) => {
+  const user = await ctx.db.get(userId);
+  if (!user?.imageUrl || user.imageUrl.startsWith('http')) {
+    return user;
+  }
+
+  const imageUrl = await ctx.storage.getUrl(user.imageUrl as Id<'_storage'>);
+
+  return {
+    ...user,
+    imageUrl,
+  };
+};
 
 // IDENTITY CHECK
 // https://docs.convex.dev/auth/database-auth#mutations-for-upserting-and-deleting-users

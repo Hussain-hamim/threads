@@ -29,24 +29,65 @@ const EditProfile = () => {
   const [name, setName] = useState('');
 
   const updateUser = useMutation(api.users.updateUser);
+  const generateUploadUrl = useMutation(api.users.generateUploadUrl);
+
   const router = useRouter();
   const [selectedImage, setSelectedImage] =
     useState<ImagePicker.ImagePickerAsset | null>(null);
 
   const onDone = async () => {
-    await updateUser({
+    let storageId = null;
+
+    if (selectedImage) {
+      storageId = await updateProfilePicture();
+    }
+
+    const toUpdate: any = {
       _id: userId as Id<'users'>,
       bio: bio,
       websiteUrl: link,
-    });
+    };
+
+    if (storageId) {
+      toUpdate.imageUrl = storageId;
+    }
+    console.log('🚀 ~ onDone ~ toUpdate:', toUpdate);
+
+    await updateUser(toUpdate);
 
     router.dismissTo('/(auth)/(tabs)/profile');
-    console.log('hhhhh');
+  };
+
+  const updateProfilePicture = async () => {
+    // Step 1: Get a short-lived upload URL
+    const postUrl = await generateUploadUrl();
+
+    // Convert URI to blob
+    const response = await fetch(selectedImage!.uri);
+    const blob = await response.blob();
+
+    // Step 2: POST the file to the URL
+    await fetch(postUrl, {
+      method: 'POST',
+      body: blob,
+      headers: {
+        'Content-Type': selectedImage!.mimeType!,
+      },
+    });
+
+    // Step 3: Update the user with the new image URL
+    // await updateImage({ _id: userId as Id<'users'>, imageUrl: postUrl });
+
+    /////
+    const { storageId } = await response.json();
+    console.log('🚀 ~ updateProfilePicture ~ storageId:', storageId);
+
+    return storageId;
   };
 
   const pickImage = async () => {
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      // mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
       quality: 1,
@@ -54,7 +95,6 @@ const EditProfile = () => {
 
     if (!result.canceled) {
       setSelectedImage(result.assets[0]);
-      // setImage(result.assets[0].uri);
     }
   };
 
