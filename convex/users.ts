@@ -46,9 +46,22 @@ export const getUserByClerkId = query({
 });
 
 export const getUserById = query({
-  args: { userId: v.id('users') },
-  handler: async (ctx, { userId }) => {
-    return getUserWithImageUrl(ctx, userId);
+  args: {
+    userId: v.id('users'),
+  },
+  handler: async (ctx, args) => {
+    const user = await ctx.db.get(args.userId);
+
+    if (!user?.imageUrl || user.imageUrl.startsWith('http')) {
+      return user;
+    } // If the imageUrl is not a URL, it is a storage ID
+
+    const url = await ctx.storage.getUrl(user.imageUrl as Id<'_storage'>); // Get the URL from storage
+
+    return {
+      ...user,
+      imageUrl: url,
+    };
   },
 });
 
@@ -57,13 +70,14 @@ export const updateUser = mutation({
     _id: v.id('users'),
     bio: v.optional(v.string()),
     websiteUrl: v.optional(v.string()),
-    imageUrl: v.optional(v.id('_storage')),
+    profilePicture: v.optional(v.string()),
     pushToken: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     await getCurrentUserOrThrow(ctx);
 
-    return await ctx.db.patch(args._id, args);
+    const { _id, ...rest } = args;
+    return await ctx.db.patch(_id, rest);
   },
 });
 
@@ -75,20 +89,14 @@ export const generateUploadUrl = mutation({
   },
 });
 
-// Reusable fn
-const getUserWithImageUrl = async (ctx: QueryCtx, userId: Id<'users'>) => {
-  const user = await ctx.db.get(userId);
-  if (!user?.imageUrl || user.imageUrl.startsWith('http')) {
-    return user;
-  }
-
-  const imageUrl = await ctx.storage.getUrl(user.imageUrl as Id<'_storage'>);
-
-  return {
-    ...user,
-    imageUrl,
-  };
-};
+export const updateImage = mutation({
+  args: { storageId: v.id('_storage'), _id: v.id('users') },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args._id, {
+      imageUrl: args.storageId,
+    }); // Update the user's image URL in the database
+  },
+});
 
 // IDENTITY CHECK
 // https://docs.convex.dev/auth/database-auth#mutations-for-upserting-and-deleting-users

@@ -30,30 +30,23 @@ const EditProfile = () => {
 
   const updateUser = useMutation(api.users.updateUser);
   const generateUploadUrl = useMutation(api.users.generateUploadUrl);
+  const updateImage = useMutation(api.users.updateImage);
 
   const router = useRouter();
   const [selectedImage, setSelectedImage] =
     useState<ImagePicker.ImagePickerAsset | null>(null);
 
   const onDone = async () => {
-    let storageId = null;
+    updateUser({
+      _id: userId as Id<'users'>,
+      bio,
+      websiteUrl: link,
+      // task: update name also please
+    });
 
     if (selectedImage) {
-      storageId = await updateProfilePicture();
+      await updateProfilePicture();
     }
-
-    const toUpdate: any = {
-      _id: userId as Id<'users'>,
-      bio: bio,
-      websiteUrl: link,
-    };
-
-    if (storageId) {
-      toUpdate.imageUrl = storageId;
-    }
-    console.log('🚀 ~ onDone ~ toUpdate:', toUpdate);
-
-    await updateUser(toUpdate);
 
     router.dismissTo('/(auth)/(tabs)/profile');
   };
@@ -67,22 +60,15 @@ const EditProfile = () => {
     const blob = await response.blob();
 
     // Step 2: POST the file to the URL
-    await fetch(postUrl, {
+    const result = await fetch(postUrl, {
       method: 'POST',
+      headers: { 'Content-Type': selectedImage!.mimeType! },
       body: blob,
-      headers: {
-        'Content-Type': selectedImage!.mimeType!,
-      },
     });
-
-    // Step 3: Update the user with the new image URL
-    // await updateImage({ _id: userId as Id<'users'>, imageUrl: postUrl });
-
-    /////
-    const { storageId } = await response.json();
+    const { storageId } = await result.json();
     console.log('🚀 ~ updateProfilePicture ~ storageId:', storageId);
-
-    return storageId;
+    // Step 3: Save the newly allocated storage id to the database
+    await updateImage({ storageId, _id: userId as Id<'users'> });
   };
 
   const pickImage = async () => {
