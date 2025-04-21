@@ -14,6 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import * as ImagePicker from 'expo-image-picker';
 
 const EditProfile = () => {
   const { biostring, linkstring, userId, imageUrl } = useLocalSearchParams<{
@@ -28,8 +29,9 @@ const EditProfile = () => {
   const [name, setName] = useState('');
 
   const updateUser = useMutation(api.users.updateUser);
-
   const router = useRouter();
+  const [selectedImage, setSelectedImage] =
+    useState<ImagePicker.ImagePickerAsset | null>(null);
 
   const onDone = async () => {
     await updateUser({
@@ -40,6 +42,20 @@ const EditProfile = () => {
 
     router.dismissTo('/(auth)/(tabs)/profile');
     console.log('hhhhh');
+  };
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [1, 1],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      setSelectedImage(result.assets[0]);
+      // setImage(result.assets[0].uri);
+    }
   };
 
   return (
@@ -53,7 +69,16 @@ const EditProfile = () => {
           ),
         }}
       />
-      <Image source={{ uri: image }} style={styles.image} />
+      {selectedImage ? (
+        <TouchableOpacity onPress={pickImage}>
+          <Image source={{ uri: selectedImage.uri }} style={styles.image} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={pickImage}>
+          <Image source={{ uri: image }} style={styles.image} />
+        </TouchableOpacity>
+      )}
+      {/* <Image source={{ uri: image }} style={styles.image} /> */}
       <View style={styles.section}>
         <View>
           <Text style={styles.label}>Name</Text>
