@@ -10,7 +10,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  AntDesign,
+  Entypo,
+} from '@expo/vector-icons';
 import { Camera, User } from 'lucide-react-native';
 import { useQueries, useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
@@ -78,7 +83,7 @@ export default function Index() {
             marginVertical: 20,
           }}
         >
-          <Ionicons name='at' size={44} />
+          <MaterialCommunityIcons name='at' size={36} />
           {/* <User size={44} /> */}
           {/* <Camera size={24} /> */}
 
@@ -116,7 +121,7 @@ export default function Index() {
             onPress={handleGoogleLogin}
           >
             <View style={styles.loginButtonContent}>
-              <Ionicons name='logo-google' color='black' size={38} />
+              <MaterialCommunityIcons name='google' color='black' size={38} />
 
               <Text style={styles.loginButtonText}>Continue with Google</Text>
               <Ionicons
@@ -129,7 +134,7 @@ export default function Index() {
 
           <TouchableOpacity style={styles.loginButton}>
             <View style={styles.loginButtonContent}>
-              <Ionicons name='cloud-outline' color='black' size={38} />
+              <MaterialCommunityIcons name='account' color='black' size={38} />
 
               <Text
                 style={styles.loginButtonText}
@@ -174,15 +179,15 @@ const styles = StyleSheet.create({
     fontFamily: 'DMSans_500Medium',
   },
   buttonContainer: {
-    gap: 10,
+    gap: 15,
     marginHorizontal: 18,
     minWidth: 340,
   },
   loginButton: {
-    backgroundColor: '#fff',
-    paddingVertical: 20,
-    paddingHorizontal: 20,
-    borderRadius: 8,
+    backgroundColor: '#ffffffe1',
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 10,
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: Colors.border,
   },

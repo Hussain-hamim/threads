@@ -5,7 +5,7 @@ import {
   query,
   QueryCtx,
 } from './_generated/server';
-import { Id } from './_generated/dataModel';
+import { Doc, Id } from './_generated/dataModel';
 
 export const getAllUsers = query({
   args: {},
@@ -37,11 +37,12 @@ export const createUser = internalMutation({
 
 export const getUserByClerkId = query({
   args: { clerkId: v.optional(v.string()) },
-  handler: async (ctx, { clerkId }) => {
-    return await ctx.db
+  handler: async (ctx, args) => {
+    const user = await ctx.db
       .query('users')
-      .filter((q) => q.eq(q.field('clerkId'), clerkId))
+      .filter((q) => q.eq(q.field('clerkId'), args.clerkId))
       .unique();
+    return getUserWithImageUrl(ctx, user);
   },
 });
 
@@ -52,18 +53,25 @@ export const getUserById = query({
   handler: async (ctx, args) => {
     const user = await ctx.db.get(args.userId);
 
-    if (!user?.imageUrl || user.imageUrl.startsWith('http')) {
-      return user;
-    } // If the imageUrl is not a URL, it is a storage ID
-
-    const url = await ctx.storage.getUrl(user.imageUrl as Id<'_storage'>); // Get the URL from storage
-
-    return {
-      ...user,
-      imageUrl: url,
-    };
+    return getUserWithImageUrl(ctx, user);
   },
 });
+
+const getUserWithImageUrl = async (
+  ctx: QueryCtx,
+  user: Doc<'users'> | null
+) => {
+  if (!user?.imageUrl || user.imageUrl.startsWith('http')) {
+    return user;
+  } // If the imageUrl is not a URL, it is a storage ID
+
+  const url = await ctx.storage.getUrl(user.imageUrl as Id<'_storage'>); // Get the URL from storage
+
+  return {
+    ...user,
+    imageUrl: url,
+  };
+};
 
 export const updateUser = mutation({
   args: {
