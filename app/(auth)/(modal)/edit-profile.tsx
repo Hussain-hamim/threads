@@ -72,6 +72,7 @@ const EditProfile = () => {
   };
 
   const pickImage = async () => {
+    // const result = await ImagePicker.launchCameraAsync({
     const result = await ImagePicker.launchImageLibraryAsync({
       // mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,

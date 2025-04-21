@@ -42,7 +42,7 @@ const UserProfile = ({ userId }: UserProfileProps) => {
         {isSelf && (
           <>
             <Link
-              href={`/(modal)/edit-profile?userId=${profile?._id}&imageUrl=${profile?.imageUrl}&biostring=${profile?.bio}`}
+              href={`/(auth)/(modal)/edit-profile?userId=${profile?._id}&imageUrl=${profile?.imageUrl}&biostring=${profile?.bio}`}
               asChild
             >
               <TouchableOpacity style={styles.button}>
