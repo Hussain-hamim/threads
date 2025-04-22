@@ -1,5 +1,5 @@
 import { Colors } from '@/constants/Colors';
-import { Id } from '@/convex/_generated/dataModel';
+import { Doc, Id } from '@/convex/_generated/dataModel';
 import { useUserProfile } from '@/hooks/useUserProfile';
 import React from 'react';
 import {
@@ -18,6 +18,9 @@ import { useAuth } from '@clerk/clerk-react';
 import { useRouter } from 'expo-router';
 import UserProfile from './UserProfile';
 import Tabs from './Tabs';
+import { usePaginatedQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import Thread from './Thread';
 
 type ProfileProps = {
   userId?: Id<'users'>;
@@ -35,11 +38,21 @@ const Profile = ({
   const { signOut } = useAuth();
   const router = useRouter();
 
+  const { results, status, loadMore } = usePaginatedQuery(
+    api.messages.getThreads,
+    { userId: userId || userProfile?._id },
+    { initialNumItems: 5 }
+  );
+
   return (
     <View style={[styles.container, { paddingTop: top + 8 }]}>
       <FlatList
-        data={[]}
-        renderItem={({ item }) => <Text>Test</Text>}
+        data={results}
+        renderItem={({ item }) => (
+          <Thread
+            thread={item as Doc<'messages'> & { creator: Doc<'users'> }}
+          />
+        )}
         ListEmptyComponent={
           <>
             <Text style={styles.tabContentText}>
