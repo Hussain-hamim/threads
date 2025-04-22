@@ -222,10 +222,10 @@ const ThreadComposer = ({
                 />
               </TouchableOpacity>
               <TouchableOpacity style={styles.iconButton}>
-                <MaterialIcons name='gif' size={24} color={Colors.border} />
+                <Ionicons name='mic-outline' size={24} color={Colors.border} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.iconButton}>
-                <Ionicons name='mic-outline' size={24} color={Colors.border} />
+                <MaterialIcons name='gif' size={24} color={Colors.border} />
               </TouchableOpacity>
               <TouchableOpacity style={styles.iconButton}>
                 <FontAwesome6 name='hashtag' size={24} color={Colors.border} />

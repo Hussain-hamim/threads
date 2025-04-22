@@ -4,10 +4,18 @@ import { Ionicons } from '@expo/vector-icons';
 import { Stack, Tabs, useRouter } from 'expo-router';
 import { StyleSheet, TouchableOpacity, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
+import {
+  Heart,
+  Home,
+  PersonStanding,
+  Plus,
+  Search,
+  User,
+} from 'lucide-react-native';
 
 const CreateTabIcon = ({ color, size }: { color: string; size: number }) => (
   <View style={styles.createIconContainer}>
-    <Ionicons name='add' size={size + 6} color={color} />
+    <Plus size={size + 6} color={color} />
   </View>
 );
 
@@ -20,7 +28,7 @@ const Layout = () => {
       screenOptions={{
         tabBarShowLabel: false,
         tabBarActiveTintColor: '#000',
-        tabBarStyle: { height: 60 },
+        tabBarStyle: { height: 70, paddingTop: 6 },
       }}
     >
       <Tabs.Screen
@@ -29,11 +37,7 @@ const Layout = () => {
           headerShown: false,
           title: 'Home',
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'home' : 'home-outline'}
-              color={color}
-              size={size}
-            />
+            <Home size={30} color={focused ? 'black' : 'gray'} />
           ),
         }}
       />
@@ -43,11 +47,7 @@ const Layout = () => {
           headerShown: false,
 
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'search' : 'search-outline'}
-              color={color}
-              size={size}
-            />
+            <Search size={30} color={focused ? 'black' : 'gray'} />
           ),
         }}
       />
@@ -65,7 +65,6 @@ const Layout = () => {
             e.preventDefault();
             router.push('/(auth)/(modal)/create');
             Haptics.selectionAsync();
-            console.log('hhhhh');
           },
         }}
       />
@@ -76,11 +75,7 @@ const Layout = () => {
           // headerShown: false,
 
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'heart' : 'heart-outline'}
-              color={color}
-              size={size}
-            />
+            <Heart size={30} color={focused ? 'black' : 'gray'} />
           ),
         }}
       />
@@ -89,11 +84,7 @@ const Layout = () => {
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons
-              name={focused ? 'person' : 'person-outline'}
-              color={color}
-              size={size}
-            />
+            <User size={30} color={focused ? 'black' : 'gray'} />
           ),
         }}
       />
@@ -110,10 +101,10 @@ const styles = StyleSheet.create({
   },
   createIconContainer: {
     backgroundColor: Colors.itemBackground,
-    borderRadius: 25,
+    borderRadius: 12,
     // padding: 20,
-    minWidth: 50,
-    minHeight: 50,
+    minWidth: 60,
+    minHeight: 44,
     alignItems: 'center',
     justifyContent: 'center',
   },

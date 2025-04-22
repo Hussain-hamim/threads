@@ -16,7 +16,13 @@ import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
 import {
   CheckCircle,
+  FeatherIcon,
+  Heart,
   LucideVerified,
+  MessageCircleReply,
+  Repeat,
+  Reply,
+  Send,
   Verified,
   VerifiedIcon,
 } from 'lucide-react-native';
@@ -86,19 +92,19 @@ const Thread = ({ thread }: ThreadProps) => {
             style={styles.actionButton}
             // onPress={() => likeThread({ messageId: thread._id })}
           >
-            <Ionicons name='heart-outline' size={24} color='black' />
+            <Heart size={22} color='black' />
             <Text style={styles.actionText}>{likeCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <Ionicons name='chatbubble-outline' size={24} color='black' />
+            <Ionicons name='chatbubble-outline' size={23} color='black' />
             <Text style={styles.actionText}>{commentCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <Ionicons name='repeat-outline' size={24} color='black' />
+            <Repeat size={22} color='black' />
             <Text style={styles.actionText}>{retweetCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <Feather name='send' size={22} color='black' />
+            <Send size={22} color='black' />
           </TouchableOpacity>
         </View>
       </View>

@@ -103,7 +103,7 @@ export default function Index() {
             onPress={handleFacebookLogin}
           >
             <View style={styles.loginButtonContent}>
-              <Ionicons name='logo-instagram' size={38} />
+              <Ionicons name='logo-instagram' size={36} />
               <Text style={styles.loginButtonText}>
                 Continue with Instagram
               </Text>
@@ -113,6 +113,16 @@ export default function Index() {
                 color={Colors.border}
               />
             </View>
+            <Text
+              style={{
+                color: 'gray',
+                marginLeft: 48,
+                fontWeight: 'bold',
+                fontSize: 16,
+              }}
+            >
+              @yourusername
+            </Text>
           </TouchableOpacity>
 
           {/* For tetstingh with a different account */}
@@ -121,7 +131,7 @@ export default function Index() {
             onPress={handleGoogleLogin}
           >
             <View style={styles.loginButtonContent}>
-              <MaterialCommunityIcons name='google' color='black' size={38} />
+              <MaterialCommunityIcons name='google' color='black' size={36} />
 
               <Text style={styles.loginButtonText}>Continue with Google</Text>
               <Ionicons
@@ -134,7 +144,7 @@ export default function Index() {
 
           <TouchableOpacity style={styles.loginButton}>
             <View style={styles.loginButtonContent}>
-              <MaterialCommunityIcons name='account' color='black' size={38} />
+              <User color='black' size={34} />
 
               <Text
                 style={styles.loginButtonText}
