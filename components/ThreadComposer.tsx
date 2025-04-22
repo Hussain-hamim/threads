@@ -234,19 +234,21 @@ const ThreadComposer = ({
       </ScrollView>
 
       {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.replyText}>Your followers can reply & quote</Text>
-        <TouchableOpacity
-          style={[
-            styles.postButton,
-            threadContent.trim() === '' && styles.disabledButton,
-          ]}
-          disabled={threadContent.trim() === ''}
-          onPress={handlePost}
-        >
-          <Text style={styles.postText}>Post</Text>
-        </TouchableOpacity>
-      </View>
+      {!isPreview && (
+        <View style={styles.footer}>
+          <Text style={styles.replyText}>Your followers can reply & quote</Text>
+          <TouchableOpacity
+            style={[
+              styles.postButton,
+              threadContent.trim() === '' && styles.disabledButton,
+            ]}
+            disabled={threadContent.trim() === ''}
+            onPress={handlePost}
+          >
+            <Text style={styles.postText}>Post</Text>
+          </TouchableOpacity>
+        </View>
+      )}
     </View>
   );
 };

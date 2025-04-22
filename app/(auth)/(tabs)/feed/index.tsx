@@ -1,8 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePaginatedQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
+import { Colors } from '@/constants/Colors';
+import ThreadComposer from '@/components/ThreadComposer';
 
 const feed = () => {
   const { top } = useSafeAreaInsets();
@@ -11,12 +13,53 @@ const feed = () => {
     {},
     { initialNumItems: 5 }
   );
-  console.log('🚀 ~ feed ~ results:', results);
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onLoadMore = () => {
+    loadMore(5);
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+
+    setTimeout(() => {
+      setRefreshing(false);
+    }, 2000);
+  };
 
   return (
-    <View style={{ marginTop: top }}>
-      <Text>feed</Text>
-    </View>
+    <FlatList
+      data={results}
+      renderItem={({ item }) => <Text>{item.content}</Text>}
+      keyExtractor={(item) => item._id.toString()}
+      onEndReached={onLoadMore}
+      refreshing={refreshing}
+      onRefresh={onRefresh}
+      onEndReachedThreshold={0.5}
+      contentContainerStyle={{ paddingTop: top }}
+      showsVerticalScrollIndicator={false}
+      showsHorizontalScrollIndicator={false}
+      ListEmptyComponent={() => (
+        <View
+          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
+          <Text>No threads available</Text>
+        </View>
+      )}
+      ItemSeparatorComponent={() => (
+        <View
+          style={{
+            height: StyleSheet.hairlineWidth,
+            backgroundColor: Colors.border,
+          }}
+        />
+      )}
+      ListHeaderComponent={() => (
+        <View style={{ paddingBottom: 10 }}>
+          <ThreadComposer isPreview />
+        </View>
+      )}
+    />
   );
 };
 
