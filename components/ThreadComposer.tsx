@@ -44,11 +44,9 @@ const ThreadComposer = ({
   const [mediaFiles, setMediaFiles] = useState<ImagePicker.ImagePickerAsset[]>(
     []
   );
-  // console.log('🚀 ~ mediaFiles:', mediaFiles[0]);
 
   const addThread = useMutation(api.messages.addThreadMessage);
-  // const inputAccessoryViewID = 'uniqueID';
-  // const generateUploadUrl = useMutation(api.messages.generateUploadUrl);
+  const generateUploadUrl = useMutation(api.messages.generateUploadUrl);
 
   const handlePost = () => {
     addThread({
@@ -106,6 +104,24 @@ const ThreadComposer = ({
     }
   };
 
+  const uploadMediaFile = async (image: ImagePicker.ImagePickerAsset) => {
+    // Step 1: Get a short-lived upload URL
+    const postUrl = await generateUploadUrl();
+
+    // Convert URI to blob
+    const response = await fetch(image!.uri);
+    const blob = await response.blob();
+
+    // Step 2: POST the file to the URL
+    const result = await fetch(postUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': image!.mimeType! },
+      body: blob,
+    });
+    const { storageId } = await result.json();
+    return storageId;
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <Stack.Screen
@@ -141,6 +157,29 @@ const ThreadComposer = ({
               autoFocus={!isPreview}
               onChangeText={setThreadContent}
             />
+
+            {mediaFiles.length > 0 && (
+              <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                {mediaFiles.map((image, index) => (
+                  <View key={index} style={styles.mediaContainer}>
+                    <Image
+                      source={{ uri: image.uri }}
+                      style={styles.mediaImage}
+                    />
+                    <TouchableOpacity
+                      onPress={() => {
+                        setMediaFiles((prev) =>
+                          prev.filter((_, i) => i !== index)
+                        );
+                      }}
+                      style={styles.deleteIconContainer}
+                    >
+                      <Entypo name='cross' size={16} color='white' />
+                    </TouchableOpacity>
+                  </View>
+                ))}
+              </ScrollView>
+            )}
 
             <View style={styles.iconRow}>
               <TouchableOpacity
