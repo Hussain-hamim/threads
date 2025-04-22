@@ -5,6 +5,7 @@ import { usePaginatedQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Colors } from '@/constants/Colors';
 import ThreadComposer from '@/components/ThreadComposer';
+import Thread from '@/components/Thread';
 
 const feed = () => {
   const { top } = useSafeAreaInsets();
@@ -30,7 +31,7 @@ const feed = () => {
   return (
     <FlatList
       data={results}
-      renderItem={({ item }) => <Text>{item.content}</Text>}
+      renderItem={({ item }) => <Thread thread={item} />}
       keyExtractor={(item) => item._id.toString()}
       onEndReached={onLoadMore}
       refreshing={refreshing}
