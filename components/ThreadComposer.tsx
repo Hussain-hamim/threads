@@ -49,7 +49,7 @@ const ThreadComposer = ({
   const generateUploadUrl = useMutation(api.messages.generateUploadUrl);
 
   const handlePost = async () => {
-    const mediaIds = await Promise.all(mediaFiles.map(uploadMediaFile));
+    const mediaIds = await Promise.all(mediaFiles.map(uploadMediaFile)); //
     console.log('🚀 ~ handlePost ~ mediaIds:', mediaIds);
 
     addThread({
