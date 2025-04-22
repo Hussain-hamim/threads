@@ -6,6 +6,7 @@ import { api } from '@/convex/_generated/api';
 import { Colors } from '@/constants/Colors';
 import ThreadComposer from '@/components/ThreadComposer';
 import Thread from '@/components/Thread';
+import { Doc } from '@/convex/_generated/dataModel';
 
 const feed = () => {
   const { top } = useSafeAreaInsets();
@@ -31,7 +32,9 @@ const feed = () => {
   return (
     <FlatList
       data={results}
-      renderItem={({ item }) => <Thread thread={item} />}
+      renderItem={({ item }) => (
+        <Thread thread={item as Doc<'messages'> & { creator: Doc<'users'> }} />
+      )}
       keyExtractor={(item) => item._id.toString()}
       onEndReached={onLoadMore}
       refreshing={refreshing}

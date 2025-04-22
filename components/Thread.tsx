@@ -14,6 +14,7 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
+import { CheckCircle } from 'lucide-react-native';
 
 type ThreadProps = {
   thread: Doc<'messages'> & { creator: Doc<'users'> };
@@ -36,9 +37,10 @@ const Thread = ({ thread }: ThreadProps) => {
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
           <View style={styles.headerText}>
-            <Link href={`/feed/profile/${creator?._id}`} asChild>
+            <Link href={`/feed/profile/${String(creator?._id)}`} asChild>
               <Text style={styles.username}>
                 {creator?.first_name} {creator?.last_name}
+                <CheckCircle size={16} color={'#1DA1F2'} />
               </Text>
             </Link>
             <Text style={styles.timestamp}>
@@ -61,7 +63,7 @@ const Thread = ({ thread }: ThreadProps) => {
           >
             {mediaFiles.map((imageUrl, index) => (
               <Link
-                href={`/(auth)/(modal)/image/${encodeURIComponent(imageUrl)}?threadId=${thread._id}&likeCount=${likeCount}&commentCount=${commentCount}&retweetCount=${retweetCount}`}
+                href={`/(auth)/(auth)/(modal)/image/${encodeURIComponent(imageUrl)}?threadId=${thread._id}&likeCount=${likeCount}&commentCount=${commentCount}&retweetCount=${retweetCount}`}
                 key={index}
                 asChild
               >
