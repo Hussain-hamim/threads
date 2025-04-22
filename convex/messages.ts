@@ -28,6 +28,8 @@ export const addThreadMessage = mutation({
 
 export const generateUploadUrl = mutation({
   handler: async (ctx) => {
+    await getCurrentUserOrThrow(ctx);
+
     const uploadUrl = await ctx.storage.generateUploadUrl();
     return uploadUrl;
   },
