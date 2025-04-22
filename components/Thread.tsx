@@ -14,7 +14,12 @@ import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
-import { CheckCircle } from 'lucide-react-native';
+import {
+  CheckCircle,
+  LucideVerified,
+  Verified,
+  VerifiedIcon,
+} from 'lucide-react-native';
 
 type ThreadProps = {
   thread: Doc<'messages'> & { creator: Doc<'users'> };
@@ -40,9 +45,11 @@ const Thread = ({ thread }: ThreadProps) => {
             <Link href={`/feed/profile/${String(creator?._id)}`} asChild>
               <Text style={styles.username}>
                 {creator?.first_name} {creator?.last_name}
-                <CheckCircle size={16} color={'#1DA1F2'} />
               </Text>
             </Link>
+            {creator.first_name === 'Hussain' && (
+              <Verified size={18} color='#1DA1f2' />
+            )}
             <Text style={styles.timestamp}>
               {new Date(thread._creationTime).toLocaleDateString()}
             </Text>
