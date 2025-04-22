@@ -9,13 +9,14 @@ import Thread from '@/components/Thread';
 import { Doc } from '@/convex/_generated/dataModel';
 import { useNavigation } from 'expo-router';
 import Animated, {
+  runOnJS,
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 
-const feed = () => {
+const Feed = () => {
   const { top } = useSafeAreaInsets();
   const { results, status, loadMore } = usePaginatedQuery(
     api.messages.getThreads,
@@ -24,17 +25,41 @@ const feed = () => {
   );
   const [refreshing, setRefreshing] = React.useState(false);
 
-  // Animation
   const navigation = useNavigation();
-  const scrollOffset = useSharedValue(0);
   const tabBarHeight = useBottomTabBarHeight();
   const isFocused = useIsFocused();
 
+  // Scroll tracking
+  const scrollOffset = useSharedValue(0);
+  const prevScrollY = useSharedValue(0);
+
+  // Show or hide tab bar
+  const updateTabBar = (shouldHide: boolean) => {
+    navigation.getParent()?.setOptions({
+      tabBarStyle: {
+        marginBottom: shouldHide ? -tabBarHeight : 0,
+        paddingTop: 6,
+        height: 70,
+      },
+    });
+  };
+
   const scrollHandler = useAnimatedScrollHandler({
     onScroll: (event) => {
-      console.log(event.contentOffset.y);
+      const currentY = event.contentOffset.y;
+
       if (isFocused) {
-        scrollOffset.value = event.contentOffset.y;
+        const goingUp = currentY < prevScrollY.value;
+        const atTop = currentY <= 0;
+
+        scrollOffset.value = currentY;
+        prevScrollY.value = currentY;
+
+        if (goingUp || atTop) {
+          runOnJS(updateTabBar)(false); // Show
+        } else {
+          runOnJS(updateTabBar)(true); // Hide
+        }
       }
     },
   });
@@ -45,7 +70,6 @@ const feed = () => {
 
   const onRefresh = () => {
     setRefreshing(true);
-
     setTimeout(() => {
       setRefreshing(false);
     }, 2000);
@@ -68,31 +92,17 @@ const feed = () => {
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       ListEmptyComponent={() => (
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
+        <View style={styles.empty}>
           <Text>No threads available</Text>
         </View>
       )}
-      ItemSeparatorComponent={() => (
-        <View
-          style={{
-            height: StyleSheet.hairlineWidth,
-            backgroundColor: Colors.border,
-          }}
-        />
-      )}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
       ListHeaderComponent={() => (
         <View style={{ paddingBottom: 10 }}>
           <Image
             source={require('@/assets/images/threads-logo-black.png')}
-            style={{
-              width: 40,
-              height: 40,
-              alignSelf: 'center',
-            }}
+            style={styles.logo}
           />
-
           <ThreadComposer isPreview />
         </View>
       )}
@@ -100,6 +110,21 @@ const feed = () => {
   );
 };
 
-export default feed;
+export default Feed;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  empty: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  separator: {
+    height: StyleSheet.hairlineWidth,
+    backgroundColor: Colors.border,
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    alignSelf: 'center',
+  },
+});
