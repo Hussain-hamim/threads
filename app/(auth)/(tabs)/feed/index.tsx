@@ -11,6 +11,7 @@ const feed = () => {
     {},
     { initialNumItems: 5 }
   );
+  console.log('🚀 ~ feed ~ results:', results);
 
   return (
     <View style={{ marginTop: top }}>

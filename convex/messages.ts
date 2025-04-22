@@ -44,7 +44,7 @@ export const getThreads = query({
     } else {
       threads = await ctx.db
         .query('messages')
-        .filter((q) => q.eq(q.field('threadId'), null))
+        .filter((q) => q.eq(q.field('threadId'), undefined))
         .order('desc')
         .paginate(args.paginationOpts);
     }
