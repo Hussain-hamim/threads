@@ -65,8 +65,12 @@ const ThreadComposer = ({
     // todo
   };
 
+  const selectImage = async (type: 'library' | 'camera') => {
+    console.log(type);
+  };
+
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Stack.Screen
         options={{
           headerLeft: () => (
@@ -79,27 +83,89 @@ const ThreadComposer = ({
           ),
         }}
       />
-      <View style={styles.topRow}>
-        {userProfile && (
-          <Image
-            source={{ uri: userProfile?.imageUrl as string }}
-            style={styles.avatar}
-          />
-        )}
-        <View style={styles.centerContainer}>
-          <Text style={styles.name}>
-            {userProfile?.first_name} {userProfile?.last_name}
-          </Text>
-          <TextInput
-            style={styles.input}
-            placeholder={isReply ? 'Reply to thread' : "What's new?"}
-            placeholderTextColor='#999'
-            multiline
-            value={threadContent}
-            autoFocus={!isPreview}
-            onChangeText={setThreadContent}
-          />
+      <ScrollView contentContainerStyle={{}}>
+        <View style={styles.topRow}>
+          {userProfile && (
+            <Image
+              source={{ uri: userProfile?.imageUrl as string }}
+              style={styles.avatar}
+            />
+          )}
+          <View style={styles.centerContainer}>
+            <Text style={styles.name}>
+              {userProfile?.first_name} {userProfile?.last_name}
+            </Text>
+            <TextInput
+              style={styles.input}
+              placeholder={isReply ? 'Reply to thread' : "What's new?"}
+              placeholderTextColor='#999'
+              multiline
+              value={threadContent}
+              autoFocus={!isPreview}
+              onChangeText={setThreadContent}
+            />
+
+            <View style={styles.iconRow}>
+              <TouchableOpacity
+                style={styles.iconButton}
+                onPress={() => selectImage('library')}
+              >
+                <Ionicons
+                  name='images-outline'
+                  size={24}
+                  color={Colors.border}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.iconButton}
+                onPress={() => selectImage('camera')}
+              >
+                <Ionicons
+                  name='camera-outline'
+                  size={24}
+                  color={Colors.border}
+                />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                <MaterialIcons name='gif' size={24} color={Colors.border} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                <Ionicons name='mic-outline' size={24} color={Colors.border} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                <FontAwesome6 name='hashtag' size={24} color={Colors.border} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                <Ionicons
+                  name='stats-chart-outline'
+                  size={24}
+                  color={Colors.border}
+                />
+              </TouchableOpacity>
+            </View>
+          </View>
+          <TouchableOpacity
+            onPress={removeThread}
+            style={[styles.cancelButton, { opacity: isPreview ? 0 : 1 }]}
+          >
+            <Ionicons name='close' size={24} color={Colors.border} />
+          </TouchableOpacity>
         </View>
+      </ScrollView>
+
+      {/* Footer */}
+      <View style={styles.footer}>
+        <Text style={styles.replyText}>Your followers can reply & quote</Text>
+        <TouchableOpacity
+          style={[
+            styles.postButton,
+            threadContent.trim() === '' && styles.disabledButton,
+          ]}
+          disabled={threadContent.trim() === ''}
+          onPress={handlePost}
+        >
+          <Text style={styles.postText}>Post</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -256,6 +322,31 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginRight: 10,
     marginTop: 10,
+  },
+  footer: {
+    paddingHorizontal: 20,
+    paddingBottom: 25,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  replyText: {
+    color: '#777',
+    fontSize: 12,
+  },
+  postButton: {
+    backgroundColor: '#000',
+    borderRadius: 20,
+    paddingVertical: 8,
+    paddingHorizontal: 18,
+  },
+  postText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  disabledButton: {
+    backgroundColor: '#ccc',
   },
 });
 
