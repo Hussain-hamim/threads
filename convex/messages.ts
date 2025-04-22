@@ -1,6 +1,7 @@
 import { v } from 'convex/values';
-import { mutation } from './_generated/server';
+import { mutation, query } from './_generated/server';
 import { getCurrentUserOrThrow } from './users';
+import { paginationOptsValidator } from 'convex/server';
 
 export const addThreadMessage = mutation({
   args: {
@@ -22,6 +23,29 @@ export const addThreadMessage = mutation({
 
     if (args.threadId) {
       //todo
+    }
+  },
+});
+
+export const getThreads = query({
+  args: {
+    paginationOpts: paginationOptsValidator,
+    userId: v.optional(v.id('users')),
+  },
+  handler: async (ctx, args) => {
+    let threads;
+    if (args.userId) {
+      threads = await ctx.db
+        .query('messages')
+        .filter((q) => q.eq(q.field('userId'), args.userId))
+        .order('desc')
+        .paginate(args.paginationOpts);
+    } else {
+      threads = await ctx.db
+        .query('messages')
+        .filter((q) => q.eq(q.field('threadId'), undefined))
+        .order('desc')
+        .paginate(args.paginationOpts);
     }
   },
 });
