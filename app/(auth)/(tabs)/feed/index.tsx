@@ -1,4 +1,4 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { usePaginatedQuery } from 'convex/react';
@@ -56,6 +56,15 @@ const feed = () => {
       )}
       ListHeaderComponent={() => (
         <View style={{ paddingBottom: 10 }}>
+          <Image
+            source={require('@/assets/images/threads-logo-black.png')}
+            style={{
+              width: 40,
+              height: 40,
+              alignSelf: 'center',
+            }}
+          />
+
           <ThreadComposer isPreview />
         </View>
       )}

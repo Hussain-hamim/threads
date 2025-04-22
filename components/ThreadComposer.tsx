@@ -127,7 +127,22 @@ const ThreadComposer = ({
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <TouchableOpacity
+      onPress={() => {
+        router.push('/(auth)/(modal)/create');
+      }}
+      style={[
+        isPreview && {
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          height: 100,
+          pointerEvents: 'box-only',
+        },
+        { flex: 1 },
+      ]}
+    >
       <Stack.Screen
         options={{
           headerLeft: () => (
@@ -249,7 +264,7 @@ const ThreadComposer = ({
           </TouchableOpacity>
         </View>
       )}
-    </View>
+    </TouchableOpacity>
   );
 };
 
