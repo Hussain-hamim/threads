@@ -40,7 +40,9 @@ const ThreadComposer = ({
   const router = useRouter();
   const [threadContent, setThreadContent] = useState('');
   const { userProfile } = useUserProfile();
-  const [mediaFiles, setMediaFiles] = useState<string[]>([]);
+  const [mediaFiles, setMediaFiles] = useState<ImagePicker.ImagePickerAsset[]>(
+    []
+  );
 
   const addThread = useMutation(api.messages.addThreadMessage);
   // const inputAccessoryViewID = 'uniqueID';
@@ -66,7 +68,25 @@ const ThreadComposer = ({
   };
 
   const selectImage = async (type: 'library' | 'camera') => {
-    console.log(type);
+    const options: ImagePicker.ImagePickerOptions = {
+      allowsEditing: true,
+      aspect: [4, 3],
+      mediaTypes: ['images', 'videos'],
+    };
+
+    let result;
+
+    if (type === 'camera') {
+      const permission = await ImagePicker.requestCameraPermissionsAsync();
+
+      result = await ImagePicker.launchCameraAsync(options);
+    } else {
+      result = await ImagePicker.launchImageLibraryAsync(options);
+    }
+
+    if (!result.canceled) {
+      setMediaFiles([result.assets[0], ...mediaFiles]);
+    }
   };
 
   return (
