@@ -92,12 +92,16 @@ const getMediaUrls = async (
     return [];
   }
 
-  return await Promise.all(
-    mediaFiles.map(async (file) => {
-      const url = await ctx.storage.getUrl(file as Id<'_storage'>);
-      return url;
-    })
+  const urlPromises = mediaFiles.map((file) =>
+    ctx.storage.getUrl(file as Id<'_storage'>)
   );
+  const results = await Promise.allSettled(urlPromises);
+  return results
+    .filter(
+      (result): result is PromiseFulfilledResult<string> =>
+        result.status === 'fulfilled'
+    )
+    .map((result) => result.value);
 };
 
 export const generateUploadUrl = mutation({
