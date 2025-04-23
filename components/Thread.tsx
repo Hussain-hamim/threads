@@ -40,7 +40,7 @@ const Thread = ({ thread }: ThreadProps) => {
     retweetCount,
     creator,
   } = thread;
-  //   const likeThread = useMutation(api.messages.likeThread);
+  const likeThread = useMutation(api.messages.likeThread);
 
   return (
     <View style={styles.container}>
@@ -90,7 +90,7 @@ const Thread = ({ thread }: ThreadProps) => {
         <View style={styles.actions}>
           <TouchableOpacity
             style={styles.actionButton}
-            // onPress={() => likeThread({ messageId: thread._id })}
+            onPress={() => likeThread({ messageId: thread._id })}
           >
             <Heart size={22} color='black' />
             <Text style={styles.actionText}>{likeCount}</Text>

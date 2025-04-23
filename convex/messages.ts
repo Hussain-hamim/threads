@@ -104,6 +104,21 @@ const getMediaUrls = async (
     .map((result) => result.value);
 };
 
+export const likeThread = mutation({
+  args: {
+    messageId: v.id('messages'),
+  },
+  handler: async (ctx, args) => {
+    await getCurrentUserOrThrow(ctx);
+
+    const message = await ctx.db.get(args.messageId);
+
+    await ctx.db.patch(args.messageId, {
+      likeCount: (message?.likeCount || 0) + 1,
+    });
+  },
+});
+
 export const generateUploadUrl = mutation({
   handler: async (ctx) => {
     await getCurrentUserOrThrow(ctx);
