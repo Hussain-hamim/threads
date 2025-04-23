@@ -16,7 +16,10 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.hussainhamim.threads"
+      "package": "com.hussainhamim.threads",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -40,8 +43,6 @@
         {
           "organization": "Hussain",
           "project": "threads",
-          // If you are using a self-hosted instance, update the value of the url property
-          // to point towards your self-hosted instance. For example, https://self-hosted.example.com/.
           "url": "https://sentry.io/"
         }
       ],
@@ -54,6 +55,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "52dbd2c5-afdf-4a7c-a5d9-f85d6bbf78db"
+      }
     }
   }
 }

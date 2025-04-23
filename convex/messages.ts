@@ -52,10 +52,12 @@ export const getThreads = query({
     const messagesWithCreator = await Promise.all(
       threads.page.map(async (thread) => {
         const creator = await getMessageCreator(ctx, thread.userId);
+        const mediaUrls = await getMediaUrls(ctx, thread.mediaFiles);
 
         return {
           ...thread,
           creator,
+          mediaFiles: mediaUrls,
         };
       })
     );
@@ -80,6 +82,22 @@ const getMessageCreator = async (ctx: QueryCtx, userId: Id<'users'>) => {
     ...user,
     imageUrl,
   };
+};
+
+const getMediaUrls = async (
+  ctx: QueryCtx,
+  mediaFiles: string[] | undefined
+) => {
+  if (!mediaFiles || mediaFiles.length === 0) {
+    return [];
+  }
+
+  return await Promise.all(
+    mediaFiles.map(async (file) => {
+      const url = await ctx.storage.getUrl(file as Id<'_storage'>);
+      return url;
+    })
+  );
 };
 
 export const generateUploadUrl = mutation({
