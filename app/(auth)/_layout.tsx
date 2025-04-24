@@ -8,7 +8,7 @@ const Layout = () => {
 
   return (
     <>
-      <StatusBar style='dark' />
+      <StatusBar style='light' />
       <Stack
         screenOptions={{
           contentStyle: { backgroundColor: 'white' },
@@ -45,9 +45,12 @@ const Layout = () => {
           options={{
             presentation: 'fullScreenModal',
             title: '',
+            headerStyle: {
+              backgroundColor: 'black',
+            },
             headerLeft: () => (
               <TouchableOpacity onPress={() => router.dismiss()}>
-                <Ionicons name='close' size={24} color='gray' />
+                <Ionicons name='close' size={24} color='white' />
               </TouchableOpacity>
             ),
             headerRight: () => (
@@ -55,7 +58,7 @@ const Layout = () => {
                 <Ionicons
                   name='ellipsis-horizontal-circle'
                   size={24}
-                  color='gray'
+                  color='white'
                 />
               </TouchableOpacity>
             ),

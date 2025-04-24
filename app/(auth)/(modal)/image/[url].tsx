@@ -1,18 +1,39 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ImageZoom } from '@likashefqet/react-native-image-zoom';
 import { useLocalSearchParams } from 'expo-router';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Page = () => {
-  const { url } = useLocalSearchParams();
-  console.log('🚀 ~ Page ~ url:', url);
+  const { url } = useLocalSearchParams<{
+    url: string;
+  }>();
 
   return (
-    <View>
-      <Text>image view</Text>
-    </View>
+    <GestureHandlerRootView>
+      <View style={styles.container}>
+        <ImageZoom
+          uri={url}
+          minScale={0.5}
+          maxScale={5}
+          minPanPointers={1}
+          doubleTapScale={2}
+          isSingleTapEnabled
+          isDoubleTapEnabled
+          style={styles.image}
+          resizeMode='contain'
+        />
+      </View>
+    </GestureHandlerRootView>
   );
 };
-
 export default Page;
-
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'black',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+});
