@@ -15,7 +15,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '@clerk/clerk-react';
-import { useRouter } from 'expo-router';
+import { Link, useRouter } from 'expo-router';
 import UserProfile from './UserProfile';
 import Tabs from './Tabs';
 import { usePaginatedQuery } from 'convex/react';
@@ -49,9 +49,13 @@ const Profile = ({
       <FlatList
         data={results}
         renderItem={({ item }) => (
-          <Thread
-            thread={item as Doc<'messages'> & { creator: Doc<'users'> }}
-          />
+          <Link href={`/(auth)/(tabs)/feed/${item._id}`} asChild>
+            <TouchableOpacity>
+              <Thread
+                thread={item as Doc<'messages'> & { creator: Doc<'users'> }}
+              />
+            </TouchableOpacity>
+          </Link>
         )}
         ListEmptyComponent={
           <>
