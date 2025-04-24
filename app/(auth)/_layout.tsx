@@ -8,7 +8,7 @@ const Layout = () => {
 
   return (
     <>
-      <StatusBar style='light' />
+      <StatusBar style='dark' />
       <Stack
         screenOptions={{
           contentStyle: { backgroundColor: 'white' },

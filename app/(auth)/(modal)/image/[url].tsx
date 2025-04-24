@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import { ImageZoom } from '@likashefqet/react-native-image-zoom';
 import { useLocalSearchParams } from 'expo-router';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { StatusBar } from 'expo-status-bar';
 
 const Page = () => {
   const { url } = useLocalSearchParams<{
@@ -10,12 +11,13 @@ const Page = () => {
 
   return (
     <GestureHandlerRootView>
+      <StatusBar style='light' />
       <View style={styles.container}>
         <ImageZoom
           uri={url}
           minScale={0.5}
           maxScale={5}
-          minPanPointers={1}
+          maxPanPointers={1}
           doubleTapScale={2}
           isSingleTapEnabled
           isDoubleTapEnabled
