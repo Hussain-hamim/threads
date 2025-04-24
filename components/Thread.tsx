@@ -7,25 +7,13 @@ import {
   TouchableOpacity,
   ScrollView,
 } from 'react-native';
-import { Feather, Ionicons } from '@expo/vector-icons';
-import { User } from '@/convex/schema';
-import { Doc, Id } from '@/convex/_generated/dataModel';
+import { Ionicons } from '@expo/vector-icons';
+import { Doc } from '@/convex/_generated/dataModel';
 import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import { Colors } from '@/constants/Colors';
 import { Link } from 'expo-router';
-import {
-  CheckCircle,
-  FeatherIcon,
-  Heart,
-  LucideVerified,
-  MessageCircleReply,
-  Repeat,
-  Reply,
-  Send,
-  Verified,
-  VerifiedIcon,
-} from 'lucide-react-native';
+import { Heart, Repeat, Send, Verified } from 'lucide-react-native';
 
 type ThreadProps = {
   thread: Doc<'messages'> & { creator: Doc<'users'> };
@@ -76,7 +64,7 @@ const Thread = ({ thread }: ThreadProps) => {
           >
             {mediaFiles.map((imageUrl, index) => (
               <Link
-                href={`/(auth)/(auth)/(modal)/image/${encodeURIComponent(imageUrl)}?threadId=${thread._id}&likeCount=${likeCount}&commentCount=${commentCount}&retweetCount=${retweetCount}`}
+                href={`/(auth)/(modal)/image/${encodeURIComponent(imageUrl)}?threadId=${thread._id}&likeCount=${likeCount}&commentCount=${commentCount}&retweetCount=${retweetCount}`}
                 key={index}
                 asChild
               >
