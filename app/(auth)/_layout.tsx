@@ -40,6 +40,7 @@ const Layout = () => {
             ),
           }}
         />
+
         <Stack.Screen
           name='(modal)/image/[url]'
           options={{
@@ -60,6 +61,18 @@ const Layout = () => {
                   size={24}
                   color='white'
                 />
+              </TouchableOpacity>
+            ),
+          }}
+        />
+        <Stack.Screen
+          name='(modal)/reply/[id]'
+          options={{
+            presentation: 'modal',
+            title: 'Reply',
+            headerRight: () => (
+              <TouchableOpacity onPress={() => router.dismiss()}>
+                <Text>Cancel</Text>
               </TouchableOpacity>
             ),
           }}
