@@ -1,5 +1,5 @@
 import ThreadComposer from '@/components/ThreadComposer';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { api } from '@/convex/_generated/api';
 import Thread from '@/components/Thread';
@@ -21,6 +21,10 @@ const Page = () => {
       ) : (
         <ActivityIndicator />
       )}
+
+      {/* <Text style={{ color: 'gray', marginLeft: 20 }}>
+        Reply to {thread?.creator?.first_name}
+      </Text> */}
 
       <ThreadComposer isReply={true} threadId={id as Id<'messages'>} />
     </View>
