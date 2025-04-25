@@ -34,7 +34,7 @@ const UserProfile = ({ userId }: UserProfileProps) => {
       </View>
       <Text style={styles.bio}>{profile?.bio || 'no bio'}</Text>
       <Text>
-        {profile?.followersCount || '10M'} followers ·{' '}
+        {profile?.followersCount || '10.9M'} followers ·{' '}
         {profile?.websiteUrl || 'https://hsn.dev'}
       </Text>
 

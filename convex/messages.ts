@@ -119,6 +119,27 @@ export const likeThread = mutation({
   },
 });
 
+export const getThreadById = query({
+  args: {
+    messageId: v.id('messages'),
+  },
+  handler: async (ctx, args) => {
+    const message = await ctx.db.get(args.messageId);
+    if (!message) {
+      throw new Error('Message not found');
+    }
+
+    const creator = await getMessageCreator(ctx, message.userId);
+    const mediaUrls = await getMediaUrls(ctx, message.mediaFiles);
+
+    return {
+      ...message,
+      creator,
+      mediaFiles: mediaUrls,
+    };
+  },
+});
+
 export const generateUploadUrl = mutation({
   handler: async (ctx) => {
     await getCurrentUserOrThrow(ctx);
