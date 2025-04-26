@@ -12,11 +12,11 @@ import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import Thread from '@/components/Thread';
 import { Id, Doc } from '@/convex/_generated/dataModel';
-import Comments from '@/components/Comments';
 
 import { useUserProfile } from '@/hooks/useUserProfile';
 import { Colors } from '@/constants/Colors';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import Comments from '@/components/Comments';
 
 const Page = () => {
   const { id } = useLocalSearchParams();
@@ -36,7 +36,7 @@ const Page = () => {
         ) : (
           <ActivityIndicator />
         )}
-        {/* <Comments threadId={id as Id<'messages'>} /> */}
+        <Comments threadId={id as Id<'messages'>} />
       </ScrollView>
       <View style={styles.border} />
       <Link href={`/(modal)/reply/${id}`} asChild>

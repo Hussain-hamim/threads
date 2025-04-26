@@ -145,7 +145,7 @@ export const getThreadById = query({
   },
 });
 
-const getThreadComments = query({
+export const getThreadComments = query({
   args: {
     messageId: v.id('messages'),
   },
