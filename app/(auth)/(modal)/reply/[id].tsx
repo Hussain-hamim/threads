@@ -22,11 +22,11 @@ const Page = () => {
         <ActivityIndicator />
       )}
 
-      {/* <Text style={{ color: 'gray', marginLeft: 20 }}>
-        Reply to {thread?.creator?.first_name}
-      </Text> */}
-
-      <ThreadComposer isReply={true} threadId={id as Id<'messages'>} />
+      <View style={{ height: 220 }}>
+        <Text style={{}}>
+          <ThreadComposer isReply={true} threadId={id as Id<'messages'>} />
+        </Text>
+      </View>
     </View>
   );
 };

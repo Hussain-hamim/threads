@@ -70,11 +70,11 @@ const Layout = () => {
           options={{
             presentation: 'modal',
             title: 'Reply',
-            headerRight: () => (
-              <TouchableOpacity onPress={() => router.dismiss()}>
-                <Text>Cancel</Text>
-              </TouchableOpacity>
-            ),
+            // headerRight: () => (
+            //   <TouchableOpacity onPress={() => router.dismiss()}>
+            //     <Text>Cancel</Text>
+            //   </TouchableOpacity>
+            // ),
           }}
         />
       </Stack>
