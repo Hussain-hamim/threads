@@ -1,5 +1,5 @@
 import ThreadComposer from '@/components/ThreadComposer';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { ActivityIndicator, View, ScrollView } from 'react-native';
 import { useLocalSearchParams } from 'expo-router';
 import { api } from '@/convex/_generated/api';
 import Thread from '@/components/Thread';
@@ -12,22 +12,24 @@ const Page = () => {
     messageId: id as Id<'messages'>,
   });
 
-  return (
-    <View>
-      {thread ? (
-        <Thread
-          thread={thread as Doc<'messages'> & { creator: Doc<'users'> }}
-        />
-      ) : (
+  if (!thread) {
+    // While loading, just show spinner
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <ActivityIndicator />
-      )}
-
-      <View style={{ height: 220 }}>
-        <Text style={{}}>
-          <ThreadComposer isReply={true} threadId={id as Id<'messages'>} />
-        </Text>
       </View>
-    </View>
+    );
+  }
+
+  return (
+    <ScrollView contentContainerStyle={{}}>
+      <Thread thread={thread as Doc<'messages'> & { creator: Doc<'users'> }} />
+
+      <View style={{}}>
+        <ThreadComposer isReply={true} threadId={id as Id<'messages'>} />
+      </View>
+    </ScrollView>
   );
 };
+
 export default Page;
