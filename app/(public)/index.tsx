@@ -113,19 +113,12 @@ export default function Index() {
                 color={Colors.border}
               />
             </View>
-            <Text
-              style={{
-                color: 'gray',
-                marginLeft: 48,
-                fontWeight: 'bold',
-                fontSize: 16,
-              }}
-            >
-              @yourusername
+            <Text style={styles.loginButtonSubtitle}>
+              Continue with your Instagram account or signup
             </Text>
           </TouchableOpacity>
 
-          {/* For tetstingh with a different account */}
+          {/* For testing with a different account */}
           <TouchableOpacity
             style={styles.loginButton}
             onPress={handleGoogleLogin}
@@ -140,7 +133,30 @@ export default function Index() {
                 color={Colors.border}
               />
             </View>
+
+            <Text style={styles.loginButtonSubtitle}>
+              Continue with your Google account
+            </Text>
           </TouchableOpacity>
+
+          <TouchableOpacity style={styles.loginButton} onPress={logout}>
+            <View style={styles.loginButtonContent}>
+              <AntDesign name='logout' size={28} color='black' />
+              <Text style={styles.loginButtonText}>Logout</Text>
+              <Ionicons
+                name='chevron-forward'
+                size={24}
+                color={Colors.border}
+              />
+            </View>
+            <Text style={styles.loginButtonSubtitle}>
+              Switch to a different account or add an account
+            </Text>
+          </TouchableOpacity>
+
+          <Text style={{ textAlign: 'center', color: 'gray', marginTop: 20 }}>
+            Made with 💖 by H<Text style={{ fontSize: 10 }}>2</Text>
+          </Text>
         </View>
       </ScrollView>
     </View>
