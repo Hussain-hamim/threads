@@ -1,12 +1,15 @@
 import { Stack } from 'expo-router';
-import React from 'react';
 
 const Layout = () => {
   return (
-    <Stack>
-      <Stack.Screen name='index' options={{ headerShown: false }} />
+    <Stack
+      screenOptions={{
+        contentStyle: { backgroundColor: '#fff' },
+        headerShadowVisible: false,
+      }}
+    >
+      <Stack.Screen name='index' />
     </Stack>
   );
 };
-
 export default Layout;
