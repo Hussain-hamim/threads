@@ -17,7 +17,7 @@ export default function SearchScreen() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          // title: 'Search',
+          title: 'Search',
           headerTitle: (props) => (
             <View style={{ flex: 1, flexDirection: 'row' }}>
               <Text style={{ fontSize: 24, fontWeight: 'bold' }}>
@@ -26,7 +26,7 @@ export default function SearchScreen() {
             </View>
           ),
           headerSearchBarOptions: {
-            placeholder: 'Search',
+            // placeholder: 'Search',
             onChangeText: (event) => setSearch(event.nativeEvent.text),
             tintColor: '#000',
             autoFocus: true,

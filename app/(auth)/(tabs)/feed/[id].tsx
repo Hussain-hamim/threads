@@ -27,7 +27,7 @@ const Page = () => {
   const tabBarHeight = useBottomTabBarHeight();
 
   return (
-    <View style={{ flexGrow: 1, marginBottom: 60 }}>
+    <View style={{ flexGrow: 1, marginBottom: 5 }}>
       <ScrollView>
         {thread ? (
           <Thread

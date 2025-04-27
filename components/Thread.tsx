@@ -32,9 +32,7 @@ const Thread = ({ thread }: ThreadProps) => {
 
   return (
     <View style={styles.container}>
-      <Link href={`/feed/profile/${String(creator?._id)}`}>
-        <Image source={{ uri: creator?.imageUrl }} style={styles.avatar} />
-      </Link>
+      <Image source={{ uri: creator?.imageUrl }} style={styles.avatar} />
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
           <View style={styles.headerText}>
