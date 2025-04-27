@@ -3,8 +3,8 @@ import React from 'react';
 
 const favorites = () => {
   return (
-    <View>
-      <Text>profile</Text>
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Text>Activity & Favorite coming soon...</Text>
     </View>
   );
 };

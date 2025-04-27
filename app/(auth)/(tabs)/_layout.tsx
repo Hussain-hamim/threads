@@ -73,6 +73,7 @@ const Layout = () => {
         name='favorites'
         options={{
           // headerShown: false,
+          title: 'Activity',
 
           tabBarIcon: ({ color, size, focused }) => (
             <Heart size={30} color={focused ? 'black' : 'gray'} />

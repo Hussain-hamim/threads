@@ -27,15 +27,15 @@ const Page = () => {
   const { userProfile } = useUserProfile();
   const tabBarHeight = useBottomTabBarHeight();
 
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
 
-  // useEffect(() => {
-  //   navigation.setOptions({ tabBarStyle: { display: 'none' } });
+  useEffect(() => {
+    navigation.setOptions({ tabBarStyle: { display: 'none' } });
 
-  //   return () => {
-  //     navigation.setOptions({ tabBarStyle: undefined }); // Reset when leave
-  //   };
-  // }, [navigation]);
+    return () => {
+      navigation.setOptions({ tabBarStyle: undefined }); // Reset when leave
+    };
+  }, [navigation]);
 
   return (
     <View style={{ flexGrow: 1, marginBottom: 5 }}>
