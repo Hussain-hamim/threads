@@ -141,30 +141,6 @@ export default function Index() {
               />
             </View>
           </TouchableOpacity>
-
-          <TouchableOpacity style={styles.loginButton}>
-            <View style={styles.loginButtonContent}>
-              <User color='black' size={34} />
-
-              <Text
-                style={styles.loginButtonText}
-                onPress={() => router.push('/(auth)/(tabs)/feed')}
-              >
-                Use without a profile
-              </Text>
-              <Ionicons
-                name='chevron-forward'
-                size={24}
-                color={Colors.border}
-              />
-            </View>
-          </TouchableOpacity>
-
-          <TouchableOpacity onPress={logout}>
-            <Text className='text-3xl' style={styles.switchAccountButtonText}>
-              Use different account (Log Out)
-            </Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>

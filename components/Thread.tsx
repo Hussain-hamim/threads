@@ -81,19 +81,19 @@ const Thread = ({ thread }: ThreadProps) => {
             style={styles.actionButton}
             onPress={() => likeThread({ messageId: thread._id })}
           >
-            <Heart size={22} color='black' />
+            <Heart size={20} color='black' />
             <Text style={styles.actionText}>{likeCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <Ionicons name='chatbubble-outline' size={23} color='black' />
+            <Ionicons name='chatbubble-outline' size={20} color='black' />
             <Text style={styles.actionText}>{commentCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <Repeat size={22} color='black' />
+            <Repeat size={20} color='black' />
             <Text style={styles.actionText}>{retweetCount}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.actionButton}>
-            <Send size={22} color='black' />
+            <Send size={20} color='black' />
           </TouchableOpacity>
         </View>
       </View>
@@ -135,8 +135,8 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   content: {
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 17,
+    marginBottom: 5,
   },
   mediaImage: {
     width: 200,

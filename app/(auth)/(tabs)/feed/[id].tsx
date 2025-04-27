@@ -7,7 +7,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import { Link, useLocalSearchParams } from 'expo-router';
+import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
 import { useQuery } from 'convex/react';
 import { api } from '@/convex/_generated/api';
 import Thread from '@/components/Thread';
@@ -17,6 +17,7 @@ import { useUserProfile } from '@/hooks/useUserProfile';
 import { Colors } from '@/constants/Colors';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import Comments from '@/components/Comments';
+import { useEffect } from 'react';
 
 const Page = () => {
   const { id } = useLocalSearchParams();
@@ -25,6 +26,16 @@ const Page = () => {
   });
   const { userProfile } = useUserProfile();
   const tabBarHeight = useBottomTabBarHeight();
+
+  // const navigation = useNavigation();
+
+  // useEffect(() => {
+  //   navigation.setOptions({ tabBarStyle: { display: 'none' } });
+
+  //   return () => {
+  //     navigation.setOptions({ tabBarStyle: undefined }); // Reset when leave
+  //   };
+  // }, [navigation]);
 
   return (
     <View style={{ flexGrow: 1, marginBottom: 5 }}>
@@ -75,3 +86,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
+
+export const options = {
+  tabBarStyle: { display: 'none' },
+};
