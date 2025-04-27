@@ -17,9 +17,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.hussainhamim.threads",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ]
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "web": {
       "bundler": "metro",
@@ -38,14 +36,6 @@
         }
       ],
       "expo-secure-store",
-      [
-        "@sentry/react-native/expo",
-        {
-          "organization": "Hussain",
-          "project": "threads",
-          "url": "https://sentry.io/"
-        }
-      ],
       [
         "expo-image-picker",
         {

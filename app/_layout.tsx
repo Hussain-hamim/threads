@@ -26,7 +26,6 @@ import { LogBox, Text, View } from 'react-native';
 import { useRouter } from 'expo-router';
 import { ConvexReactClient } from 'convex/react';
 import { ConvexProviderWithClerk } from 'convex/react-clerk';
-import * as Sentry from '@sentry/react-native';
 import { isRunningInExpoGo } from 'expo';
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!, {
@@ -41,30 +40,6 @@ if (!clerkPublishableKey) {
   );
 }
 LogBox.ignoreLogs(['Clerk: Clerk has been loaded with development keys']);
-
-const routingInstrumentation = Sentry.reactNavigationIntegration();
-
-const navigationIntegration = Sentry.reactNavigationIntegration({
-  enableTimeToInitialDisplay: !isRunningInExpoGo(),
-});
-
-Sentry.init({
-  dsn: process.env.EXPO_PUBLIC_SENTRY_DSN,
-  // Set tracesSampleRate to 1.0 to capture 100% of transactions for tracing.
-  // We recommend adjusting this value in production.
-  // Learn more at
-  // https://docs.sentry.io/platforms/javascript/configuration/options/#traces-sample-rate
-  attachScreenshot: true,
-  debug: false,
-  tracesSampleRate: 1.0,
-  _experiments: {
-    profileSampleRate: 1.0,
-    replaysSessionSampleRate: 1.0,
-    replaysOnErrorSampleRate: 1.0,
-  },
-  integrations: [navigationIntegration],
-  enableNativeFramesTracking: !isRunningInExpoGo(),
-});
 
 SplashScreen.preventAutoHideAsync();
 
@@ -101,11 +76,6 @@ const InitialLayout = () => {
 };
 
 export default function RootLayout() {
-  const ref = useNavigationContainerRef();
-  useEffect(() => {
-    routingInstrumentation.registerNavigationContainer(ref);
-  }, [ref]);
-
   return (
     <ClerkProvider publishableKey={clerkPublishableKey} tokenCache={tokenCache}>
       <ClerkLoaded>
