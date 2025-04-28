@@ -1,31 +1,23 @@
+import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
-  View,
+  Alert,
+  Image,
+  ScrollView,
+  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Alert,
+  View,
 } from 'react-native';
-import {
-  Ionicons,
-  Entypo,
-  FontAwesome5,
-  MaterialIcons,
-  Feather,
-} from '@expo/vector-icons';
-
-import {} from 'react-native';
-import { FontAwesome6 } from '@expo/vector-icons';
-import { useUserProfile } from '@/hooks/useUserProfile';
-import { Stack, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
-import { useMutation } from 'convex/react';
 import { api } from '@/convex/_generated/api';
-import * as ImagePicker from 'expo-image-picker';
 import { Id } from '@/convex/_generated/dataModel';
+import { useUserProfile } from '@/hooks/useUserProfile';
+import { FontAwesome6 } from '@expo/vector-icons';
+import { useMutation } from 'convex/react';
+import * as ImagePicker from 'expo-image-picker';
+import { Stack, useRouter } from 'expo-router';
 
 type ThreadComposerProps = {
   isPreview?: boolean;
@@ -44,19 +36,18 @@ const ThreadComposer = ({
   const [mediaFiles, setMediaFiles] = useState<ImagePicker.ImagePickerAsset[]>(
     []
   );
-
   const addThread = useMutation(api.messages.addThreadMessage);
   const generateUploadUrl = useMutation(api.messages.generateUploadUrl);
 
   const handlePost = async () => {
     const mediaIds = await Promise.all(mediaFiles.map(uploadMediaFile)); //
-    console.log('🚀 ~ handlePost ~ mediaIds:', mediaIds);
 
     addThread({
       content: threadContent,
       threadId,
       mediaFiles: mediaIds,
     });
+
     setThreadContent('');
     setMediaFiles([]);
     router.dismiss();
@@ -128,6 +119,7 @@ const ThreadComposer = ({
 
   return (
     <TouchableOpacity
+      activeOpacity={0.8}
       onPress={() => {
         router.push('/(auth)/(modal)/create');
       }}
@@ -186,6 +178,7 @@ const ThreadComposer = ({
                       style={styles.mediaImage}
                     />
                     <TouchableOpacity
+                      activeOpacity={0.8}
                       onPress={() => {
                         setMediaFiles((prev) =>
                           prev.filter((_, i) => i !== index)
@@ -253,6 +246,7 @@ const ThreadComposer = ({
         <View style={styles.footer}>
           <Text style={styles.replyText}>Your followers can reply & quote</Text>
           <TouchableOpacity
+            activeOpacity={0.5}
             style={[
               styles.postButton,
               threadContent.trim() === '' && styles.disabledButton,

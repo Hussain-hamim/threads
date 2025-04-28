@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, FlatList, TextInput } from 'react-native';
-import { Stack } from 'expo-router';
+import ProfileSearchResult from '@/components/ProfileSearchResult';
+import { Colors } from '@/constants/Colors';
 import { api } from '@/convex/_generated/api';
 import { useQuery } from 'convex/react';
-import { Colors } from '@/constants/Colors';
-import ProfileSearchResult from '@/components/ProfileSearchResult';
+import { Stack } from 'expo-router';
+import React, { useState } from 'react';
+import { FlatList, StyleSheet, Text, TextInput, View } from 'react-native';
 
 export default function SearchScreen() {
   const [search, setSearch] = useState('');
@@ -17,10 +17,10 @@ export default function SearchScreen() {
     <View style={styles.container}>
       <Stack.Screen
         options={{
-          title: '', // Just small title in system bar
+          title: '',
         }}
       />
-      {/* Now a full custom search bar inside the page */}
+
       <View style={styles.searchContainer}>
         <Text style={styles.title}>Search</Text>
         <TextInput
