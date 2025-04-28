@@ -1,27 +1,20 @@
-import {
-  FlatList,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
-import React from 'react';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { usePaginatedQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import { Colors } from '@/constants/Colors';
-import ThreadComposer from '@/components/ThreadComposer';
 import Thread from '@/components/Thread';
+import ThreadComposer from '@/components/ThreadComposer';
+import { Colors } from '@/constants/Colors';
+import { api } from '@/convex/_generated/api';
 import { Doc } from '@/convex/_generated/dataModel';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { useIsFocused } from '@react-navigation/native';
+import { usePaginatedQuery } from 'convex/react';
 import { Link, useNavigation } from 'expo-router';
+import React from 'react';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
   runOnJS,
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
-import { useIsFocused } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const Feed = () => {
   const { top } = useSafeAreaInsets();
