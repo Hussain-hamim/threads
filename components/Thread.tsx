@@ -41,10 +41,9 @@ const Thread = ({ thread }: ThreadProps) => {
                 {creator?.first_name} {creator?.last_name}
               </Text>
             </Link>
-            {creator.first_name === 'Hussain' ||
-              (creator.first_name === 'Eren' && (
-                <Verified size={18} color='#1DA1f2' />
-              ))}
+            {creator.pushToken === 'verified' && (
+              <Verified size={18} color='#1DA1f2' />
+            )}
             <Text style={styles.timestamp}>
               {new Date(thread._creationTime).toLocaleDateString()}
             </Text>
