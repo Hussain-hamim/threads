@@ -1,6 +1,10 @@
-import '../../global.css';
 import { Colors } from '@/constants/Colors';
 import { useAuth, useOAuth } from '@clerk/clerk-expo';
+import {
+  AntDesign,
+  Ionicons,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import {
   Image,
@@ -10,16 +14,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {
-  Ionicons,
-  MaterialCommunityIcons,
-  AntDesign,
-  Entypo,
-} from '@expo/vector-icons';
-import { Camera, User } from 'lucide-react-native';
-import { useQueries, useQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import { useRouter } from 'expo-router';
+import '../../global.css';
 
 export default function Index() {
   const { startOAuthFlow } = useOAuth({ strategy: 'oauth_facebook' });
@@ -28,10 +23,6 @@ export default function Index() {
     strategy: 'oauth_google',
   });
   const { signOut } = useAuth();
-  const router = useRouter();
-
-  const data = useQuery(api.users.getAllUsers);
-  // console.log('🚀 ~ Index ~ data:', data);
 
   const handleFacebookLogin = async () => {
     try {
