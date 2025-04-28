@@ -1,10 +1,10 @@
-import ThreadComposer from '@/components/ThreadComposer';
-import { ActivityIndicator, View, ScrollView } from 'react-native';
-import { useLocalSearchParams } from 'expo-router';
-import { api } from '@/convex/_generated/api';
 import Thread from '@/components/Thread';
-import { Id, Doc } from '@/convex/_generated/dataModel';
+import ThreadComposer from '@/components/ThreadComposer';
+import { api } from '@/convex/_generated/api';
+import { Doc, Id } from '@/convex/_generated/dataModel';
 import { useQuery } from 'convex/react';
+import { useLocalSearchParams } from 'expo-router';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 
 const Page = () => {
   const { id } = useLocalSearchParams();
@@ -22,10 +22,10 @@ const Page = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={{}}>
+    <ScrollView>
       <Thread thread={thread as Doc<'messages'> & { creator: Doc<'users'> }} />
 
-      <View style={{}}>
+      <View>
         <ThreadComposer isReply={true} threadId={id as Id<'messages'>} />
       </View>
     </ScrollView>

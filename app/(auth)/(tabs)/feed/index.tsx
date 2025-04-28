@@ -25,7 +25,7 @@ import { useIsFocused } from '@react-navigation/native';
 
 const Feed = () => {
   const { top } = useSafeAreaInsets();
-  const { results, status, loadMore } = usePaginatedQuery(
+  const { results, loadMore } = usePaginatedQuery(
     api.messages.getThreads,
     {},
     { initialNumItems: 5 }
@@ -89,7 +89,7 @@ const Feed = () => {
       data={results}
       renderItem={({ item }) => (
         <Link href={`/(auth)/(tabs)/feed/${item._id}`} asChild>
-          <TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.8}>
             <Thread
               thread={item as Doc<'messages'> & { creator: Doc<'users'> }}
             />

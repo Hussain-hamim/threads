@@ -5,9 +5,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { StatusBar } from 'expo-status-bar';
 
 const Page = () => {
-  const { url } = useLocalSearchParams<{
+  const { url, likeCount } = useLocalSearchParams<{
     url: string;
+    likeCount: string;
   }>();
+
+  console.log('Likes🚀:', likeCount);
 
   return (
     <GestureHandlerRootView>

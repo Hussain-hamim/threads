@@ -68,7 +68,7 @@ const Thread = ({ thread }: ThreadProps) => {
                 key={index}
                 asChild
               >
-                <TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.8}>
                   <Image source={{ uri: imageUrl }} style={styles.mediaImage} />
                 </TouchableOpacity>
               </Link>
@@ -77,13 +77,14 @@ const Thread = ({ thread }: ThreadProps) => {
         )}
         <View style={styles.actions}>
           <TouchableOpacity
+            activeOpacity={0.8}
             style={styles.actionButton}
             onPress={() => likeThread({ messageId: thread._id })}
           >
             <Heart size={20} color='black' />
             <Text style={styles.actionText}>{likeCount}</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionButton}>
+          <TouchableOpacity activeOpacity={0.8} style={styles.actionButton}>
             <Ionicons name='chatbubble-outline' size={20} color='black' />
             <Text style={styles.actionText}>{commentCount}</Text>
           </TouchableOpacity>

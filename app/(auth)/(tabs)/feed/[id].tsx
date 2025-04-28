@@ -1,23 +1,21 @@
+import Thread from '@/components/Thread';
+import { api } from '@/convex/_generated/api';
+import { Doc, Id } from '@/convex/_generated/dataModel';
+import { useQuery } from 'convex/react';
+import { Link, useLocalSearchParams } from 'expo-router';
 import {
   ActivityIndicator,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
   Image,
-  View,
+  ScrollView,
+  StyleSheet,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
-import { Link, useLocalSearchParams, useNavigation } from 'expo-router';
-import { useQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import Thread from '@/components/Thread';
-import { Id, Doc } from '@/convex/_generated/dataModel';
 
-import { useUserProfile } from '@/hooks/useUserProfile';
-import { Colors } from '@/constants/Colors';
-import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import Comments from '@/components/Comments';
-import { useEffect } from 'react';
+import { Colors } from '@/constants/Colors';
+import { useUserProfile } from '@/hooks/useUserProfile';
 
 const Page = () => {
   const { id } = useLocalSearchParams();
@@ -25,17 +23,6 @@ const Page = () => {
     messageId: id as Id<'messages'>,
   });
   const { userProfile } = useUserProfile();
-  const tabBarHeight = useBottomTabBarHeight();
-
-  const navigation = useNavigation();
-
-  useEffect(() => {
-    navigation.setOptions({ tabBarStyle: { display: 'none' } });
-
-    return () => {
-      navigation.setOptions({ tabBarStyle: undefined }); // Reset when leave
-    };
-  }, [navigation]);
 
   return (
     <View style={{ flexGrow: 1, marginBottom: 5 }}>
@@ -50,8 +37,8 @@ const Page = () => {
         <Comments threadId={id as Id<'messages'>} />
       </ScrollView>
       <View style={styles.border} />
-      <Link href={`/(modal)/reply/${id}`} asChild>
-        <TouchableOpacity style={styles.replyButton}>
+      <Link href={`/reply/${id as string}`} asChild>
+        <TouchableOpacity activeOpacity={0.8} style={styles.replyButton}>
           <Image
             source={{ uri: userProfile?.imageUrl as string }}
             style={styles.replyButtonImage}
@@ -86,7 +73,3 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
 });
-
-export const options = {
-  tabBarStyle: { display: 'none' },
-};
