@@ -15,6 +15,7 @@ const UserProfile = ({ userId }: UserProfileProps) => {
     userId: userId as Id<'users'>,
     // userId: userId,
   });
+
   const { userProfile } = useUserProfile();
   const isSelf = userProfile?._id === userId;
 

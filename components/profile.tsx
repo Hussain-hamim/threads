@@ -1,26 +1,24 @@
 import { Colors } from '@/constants/Colors';
+import { api } from '@/convex/_generated/api';
 import { Doc, Id } from '@/convex/_generated/dataModel';
 import { useUserProfile } from '@/hooks/useUserProfile';
+import { useAuth } from '@clerk/clerk-react';
+import { Ionicons } from '@expo/vector-icons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { usePaginatedQuery } from 'convex/react';
+import { Link, useRouter } from 'expo-router';
 import React from 'react';
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
   FlatList,
-  TextInput,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { Ionicons } from '@expo/vector-icons';
-import { useAuth } from '@clerk/clerk-react';
-import { Link, useRouter } from 'expo-router';
-import UserProfile from './UserProfile';
 import Tabs from './Tabs';
-import { usePaginatedQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
 import Thread from './Thread';
+import UserProfile from './UserProfile';
 
 type ProfileProps = {
   userId?: Id<'users'>;
@@ -38,7 +36,7 @@ const Profile = ({
   const { signOut } = useAuth();
   const router = useRouter();
 
-  const { results, status, loadMore } = usePaginatedQuery(
+  const { results } = usePaginatedQuery(
     api.messages.getThreads,
     { userId: userId || userProfile?._id },
     { initialNumItems: 5 }
@@ -50,7 +48,7 @@ const Profile = ({
         data={results}
         renderItem={({ item }) => (
           <Link href={`/(auth)/(tabs)/feed/${item._id}`} asChild>
-            <TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.8}>
               <Thread
                 thread={item as Doc<'messages'> & { creator: Doc<'users'> }}
               />

@@ -2,10 +2,10 @@ import { Colors } from '@/constants/Colors';
 import { api } from '@/convex/_generated/api';
 import { Id } from '@/convex/_generated/dataModel';
 import { useMutation } from 'convex/react';
+import * as ImagePicker from 'expo-image-picker';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Button,
   Image,
   ScrollView,
   StyleSheet,
@@ -14,7 +14,6 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import * as ImagePicker from 'expo-image-picker';
 
 const EditProfile = () => {
   const { biostring, linkstring, userId, imageUrl } = useLocalSearchParams<{
@@ -105,7 +104,6 @@ const EditProfile = () => {
           <Image source={{ uri: image }} style={styles.image} />
         </TouchableOpacity>
       )}
-      {/* <Image source={{ uri: image }} style={styles.image} /> */}
       <View style={styles.section}>
         <View>
           <Text style={styles.label}>Name</Text>
